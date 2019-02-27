@@ -1,6 +1,7 @@
 package domain;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "offre_emploi")
@@ -29,10 +30,16 @@ public class OffreEmploi {
     public void setSalaireOffert(float salaireOffert) { this.salaireOffert = salaireOffert; }
     
     @ManyToOne
+    @JoinColumn(name = "id_emploi", insertable = false)
+    private Emploi emploi;
+    public Emploi getEmploi()            { return emploi; }
+    public void setEmploi(Emploi emploi) { this.emploi = emploi; }
+    
+    @ManyToOne
     @JoinColumn(name = "id_etat_offre_emploi", insertable = false)
-    private OffreEmploi offreEmploi;
-    public OffreEmploi getOffreEmploi()                 { return offreEmploi; }
-    public void setOffreEmploi(OffreEmploi offreEmploi) { this.offreEmploi = offreEmploi; }
+    private EtatOffreEmploi etatOffreEmploi;
+    public EtatOffreEmploi getEtatOffreEmploi()                     { return etatOffreEmploi; }
+    public void setEtatOffreEmploi(EtatOffreEmploi etatOffreEmploi) { this.etatOffreEmploi = etatOffreEmploi; }
     
     @ManyToOne
     @JoinColumn(name = "id_recruteur_interne", insertable = false)
@@ -45,4 +52,24 @@ public class OffreEmploi {
     private Recruteur recruteurExterne;
     public Recruteur getRecruteurExterne()                      { return recruteurExterne; }
     public void setRecruteurExterne(Recruteur recruteurExterne) { this.recruteurExterne = recruteurExterne; }
+    
+    
+    public OffreEmploi()                                        { }
+    
+    @Override
+    public boolean equals(Object o) {
+        
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OffreEmploi that = (OffreEmploi) o;
+        return id == that.id && nbrPostes == that.nbrPostes && Float.compare(that.salaireOffert, salaireOffert) == 0 && Objects.equals(dateParution, that.dateParution) && Objects.equals(dateFin, that.dateFin) && Objects.equals(emploi, that.emploi) && Objects.equals(etatOffreEmploi, that.etatOffreEmploi) && Objects.equals(recruteurInterne, that.recruteurInterne) && Objects.equals(recruteurExterne, that.recruteurExterne);
+    }
+    @Override
+    public int hashCode() { return Objects.hash(id, dateParution, dateFin, nbrPostes, salaireOffert, emploi, etatOffreEmploi, recruteurInterne, recruteurExterne); }
+    
+    @Override
+    public String toString() {
+        
+        return "OffreEmploi{" + "id=" + id + ", dateParution='" + dateParution + '\'' + ", dateFin='" + dateFin + '\'' + ", nbrPostes=" + nbrPostes + ", salaireOffert=" + salaireOffert + ", emploi=" + emploi + ", etatOffreEmploi=" + etatOffreEmploi + ", recruteurInterne=" + recruteurInterne + ", recruteurExterne=" + recruteurExterne + '}';
+    }
 }

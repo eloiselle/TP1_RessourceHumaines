@@ -1,6 +1,7 @@
 package domain;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "emploi")
@@ -27,4 +28,30 @@ public class Emploi {
     public TypeEmploi getTypeEmploi()        { return typeEmploi; }
     public void setTypeEmploi(TypeEmploi typeEmploi) { this.typeEmploi = typeEmploi; }
     
+    public Emploi() {            }
+    
+    public Emploi(int id, String titre, String description, TypeEmploi typeEmploi) {
+        
+        this.id = id;
+        this.titre = titre;
+        this.description = description;
+        this.typeEmploi = typeEmploi;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Emploi emploi = (Emploi) o;
+        return id == emploi.id && Objects.equals(titre, emploi.titre) && Objects.equals(description, emploi.description) && Objects.equals(typeEmploi, emploi.typeEmploi);
+    }
+    @Override
+    public int hashCode() { return Objects.hash(id, titre, description, typeEmploi); }
+    
+    @Override
+    public String toString() {
+        
+        return "Emploi{" + "id=" + id + ", titre='" + titre + '\'' + ", description='" + description + '\'' + ", typeEmploi=" + typeEmploi + '}';
+    }
 }

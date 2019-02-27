@@ -8,6 +8,7 @@ TODO:
 
     Model: # Anthony
         Mettre a jour les proprietes des classes
+        Faire les relation ManyToMany
 
 
     Controller: # Zachary
@@ -15,6 +16,10 @@ TODO:
 
     View: # Emile
         Faire les interfaces
+
+
+    Performance: (au besoin)
+        Enlever l'evaluation des objets dans hashcode et equals
 
 
     Remise2:

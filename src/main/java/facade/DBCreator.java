@@ -13,14 +13,61 @@ public class DBCreator {
     
         RHModel.init();
     
+
         generateData();
         
         RHModel.close();
     
     }
     
+
     public void generateData(){
         
+        // TYPE
+        
+        TypeEmploi teManuel = new TypeEmploi();
+        teManuel.setName("Manuel");
+        teManuel.setDescription("Emploi manuel");
+        RHModel.create(teManuel);
+        
+        TypeEmploi teInformatique = new TypeEmploi();
+        teInformatique.setName("Informatique");
+        teInformatique.setDescription("Emploi relie au domaine de l'informatique");
+        RHModel.create(teInformatique);
+        
+        TypeEmploi teService = new TypeEmploi();
+        teService.setName("Service");
+        teService.setDescription("Emploi relie au domaine du service a la clientele");
+        RHModel.create(teService);
+        
+        // ETAT
+        
+        EtatOffreEmploi eoeRecherche = new EtatOffreEmploi();
+        eoeRecherche.setName("Recherche");
+        eoeRecherche.setDescription("L'entreprise recherche activement des candidat");
+        RHModel.create(eoeRecherche);
+        
+        EtatOffreEmploi eoeHired = new EtatOffreEmploi();
+        eoeHired.setName("Hired");
+        eoeHired.setDescription("Le poste a ete comble");
+        RHModel.create(eoeHired);
+        
+        EtatOffreEmploi eoeNotFound = new EtatOffreEmploi();
+        eoeNotFound.setName("Not_Satisfied");
+        eoeNotFound.setDescription("L'entreprise n'a pas trouver ce quelle cherche");
+        RHModel.create(eoeNotFound);
+        
+        EtatOffreEmploi eoeWaiting = new EtatOffreEmploi();
+        eoeWaiting.setName("Waiting");
+        eoeWaiting.setDescription("L'entreprise est en attente d'avancement");
+        RHModel.create(eoeWaiting);
+        
+        EtatOffreEmploi eoeProcessing = new EtatOffreEmploi();
+        eoeProcessing.setName("Processing");
+        eoeProcessing.setDescription("L'entreprise est en train d'evaluer les candidats");
+        RHModel.create(eoeProcessing);
+        
+        // TEST DATA
     
         Candidat candidat = new Candidat();
         candidat.setPrenom("Anthony");
@@ -31,17 +78,22 @@ public class DBCreator {
         candidat.setTelephone(BigInteger.valueOf(1892448451));
         RHModel.ajouteCandidat(candidat);
     
-        Application application = new Application();
-        application.setCvPath("/home/rh/cv/coteanthony20180303.doc");
-        RHModel.create(application);
+        Certification certification = new Certification();
+        certification.setName("DEC en Informatique de gestion");
+        certification.setDescription("Programmation, Base de donnees, Interface graphique, ...");
+        RHModel.create(certification);
     
+
         Competence competence = new Competence();
         competence.setName("Java");
         competence.setDescription("Programmation OOP avec Java");
+        competence.setCertification(certification);
         RHModel.create(competence);
     
         Emploi emploi = new Emploi();
         emploi.setTitre("Programmeur");
+        emploi.setDescription("Tapper au hasard sur un clavier jusqu'a ce que ca compile");
+        emploi.setTypeEmploi(teService);
         RHModel.create(emploi);
     
         Entreprise entreprise = new Entreprise();
@@ -49,18 +101,7 @@ public class DBCreator {
         entreprise.setDescription("Entreprise de sherbrooke");
         RHModel.create(entreprise);
     
-        EtatOffreEmploi etatOffreEmploi = new EtatOffreEmploi();
-        etatOffreEmploi.setName("Recherche");
-        etatOffreEmploi.setDescription("L'entreprise recherche activement des candidat");
-        RHModel.create(etatOffreEmploi);
-    
-        OffreEmploi offreEmploi = new OffreEmploi();
-        offreEmploi.setDateParution("2019-02-02");
-        offreEmploi.setDateFin("2019-03-03");
-        offreEmploi.setSalaireOffert(20);
-        offreEmploi.setNbrPostes(2);
-        RHModel.create(offreEmploi);
-    
+
         Recruteur recruteur = new Recruteur();
         recruteur.setPrenom("Alice");
         recruteur.setNom("Merveille");
@@ -70,72 +111,33 @@ public class DBCreator {
         recruteur.setCommission(12);
         RHModel.create(recruteur);
     
-        Certification typeCertification = new Certification();
-        typeCertification.setName("DEC en Informatique de gestion");
-        typeCertification.setDescription("Programmation, Base de donnee, Interface graphique");
-        RHModel.create(typeCertification);
+        OffreEmploi offreEmploi = new OffreEmploi();
+        offreEmploi.setDateParution("2019-02-02");
+        offreEmploi.setDateFin("2019-03-03");
+        offreEmploi.setSalaireOffert(20);
+        offreEmploi.setNbrPostes(2);
+        offreEmploi.setEmploi(emploi);
+        offreEmploi.setEtatOffreEmploi(eoeProcessing);
+        offreEmploi.setRecruteurInterne(recruteur);
+        offreEmploi.setRecruteurExterne(recruteur);
+        RHModel.create(offreEmploi);
     
-        TypeEmploi typeEmploi = new TypeEmploi();
-        typeEmploi.setName("Informatique");
-        typeEmploi.setDescription("Emploi relie au domaine de l'informatique");
-        RHModel.create(typeEmploi);
-        
+        Application application = new Application();
+        application.setCvPath("/home/rh/cv/coteanthony20180303.doc");
+        application.setDateApplication("2019-02-02");
+        application.setDateEntrevue("2019-03-03");
+        application.setHeureEntrevue("13:15");
+        application.setAdresseEntrevue("400 rue Marquette");
+        application.setCommentaire("...");
+        application.setOffreEmploi(offreEmploi);
+        RHModel.create(application);
+    
+
+
     }
         
         
-        
-    public void obsolete(){
-//
-//        etudiant = RHModel.loadEtudiant(1);
-//
-//        etudiant.setPrenom("Anthony");
-//        etudiant.setNom("Cote");
-//        RHModel.update(etudiant);
-//        etudiant = RHModel.loadEtudiant(1);
-//
-//        etudiant.setId(2);
-//        RHModel.update(etudiant);
-//
-//
-//
-//
-//        Cours cours = new Cours(v101, prof[0], "H18");
-//        Cours cours2 = new Cours(v102, prof[1], "A18");
-//        Cours cours3 = new Cours(t101, prof[2], "A19");
-//        Cours cours4 = new Cours(t102, prof[3], "H19");
-//        Cours cours5 = new Cours(t101, prof[4], "A20");
-//
-//        Inscription inscription = new Inscription();
-//        inscription.setEtudiant(etu[0]);
-//        inscription.setDate("2016-08-21");
-//        inscription.setEtat(1);
-//
-//
-//        RHModel.create(inscription);
-//        inscription = RHModel.annulerInscription(inscription);
-//
-//
-//
-//        RHModel.supprimerProfesseur(prof[2]);
-//
-//
-//
-//        // Cours (composite primary key)
-//        RHModel.ajouterCours(cours, false);
-//        cours.setCurriculum(v102);
-//        RHModel.changerCours(cours);
-//
-//        RHModel.ajouterCours(cours2, false);
-//        cours2.setProfesseur(prof[2]);
-//        RHModel.changerCours(cours2);
-//
-//
-//        RHModel.ajouterCours(cours3, false);
-//        RHModel.ajouterCours(cours4, false);
-//        RHModel.ajouterCours(cours5, false);
-//
-        
-    }
+    
     
     
     

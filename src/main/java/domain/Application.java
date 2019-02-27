@@ -1,6 +1,7 @@
 package domain;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "application")
@@ -49,4 +50,41 @@ public class Application {
     private OffreEmploi offre_emploi;
     public OffreEmploi getOffreEmploi()                 { return offre_emploi; }
     public void setOffreEmploi(OffreEmploi offreEmploi) { this.offre_emploi = offreEmploi; }
+    
+    public Application() {           }
+    
+    public Application(int id, String cvPath, String dateApplication, String dateEntrevue, String heureEntrevue,
+                       String adresseEntrevue, String commentaire, Candidat candidat, OffreEmploi offre_emploi) {
+        
+        this.id = id;
+        this.cvPath = cvPath;
+        this.dateApplication = dateApplication;
+        this.dateEntrevue = dateEntrevue;
+        this.heureEntrevue = heureEntrevue;
+        this.adresseEntrevue = adresseEntrevue;
+        this.commentaire = commentaire;
+        this.candidat = candidat;
+        this.offre_emploi = offre_emploi;
+    }
+    @Override
+    public boolean equals(Object o) {
+        
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Application that = (Application) o;
+        return id == that.id && Objects.equals(cvPath, that.cvPath) && Objects.equals(dateApplication, that.dateApplication) && Objects.equals(dateEntrevue, that.dateEntrevue) && Objects.equals(heureEntrevue, that.heureEntrevue) && Objects.equals(adresseEntrevue, that.adresseEntrevue) && Objects.equals(commentaire, that.commentaire) && Objects.equals(candidat, that.candidat) && Objects.equals(offre_emploi, that.offre_emploi);
+    }
+    @Override
+    public int hashCode() {
+        
+        return Objects.hash(id, cvPath, dateApplication, dateEntrevue, heureEntrevue, adresseEntrevue, commentaire, candidat, offre_emploi);
+    }
+    @Override
+    public String toString() {
+        
+        return "Application{" + "id=" + id + ", cvPath='" + cvPath + '\'' + ", dateApplication='" + dateApplication +
+                '\'' + ", dateEntrevue='" + dateEntrevue + '\'' + ", heureEntrevue='" + heureEntrevue + '\'' +
+                ", adresseEntrevue='" + adresseEntrevue + '\'' + ", commentaire='" + commentaire + '\'' + ", candidat=" +
+                candidat + ", offre_emploi=" + offre_emploi + '}';
+    }
 }
