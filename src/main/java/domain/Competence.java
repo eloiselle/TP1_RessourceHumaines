@@ -1,9 +1,6 @@
 package domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "competence")
@@ -22,6 +19,12 @@ public class Competence {
     @Column(name = "description") String description;
     public String getDescription()                 { return description; }
     public void setDescription(String description) { this.description = description; }
+    
+    @ManyToOne
+    @JoinColumn(name = "id_certification", insertable = false)
+    private Certification certification;
+    public Certification getcertification()                { return certification; }
+    public void setProfesseur(Certification certification) { this.certification = certification; }
     
     
 }

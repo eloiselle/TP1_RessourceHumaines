@@ -2,6 +2,8 @@ package domain;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.math.BigInteger;
 
 public class Recruteur {
@@ -31,4 +33,20 @@ public class Recruteur {
     public String getEmail()           { return email; }
     public void setEmail(String email) { this.email = email; }
     
+    @Column(name = "commission")
+    private float commission;
+    public float getCommission()                { return commission; }
+    public void setCommission(float commission) { this.commission = commission; }
+    
+    @Column(name = "nas")
+    private BigInteger nas;
+    public BigInteger getNas()         { return nas; }
+    public void setNas(BigInteger nas) { this.nas = nas; }
+    
+    
+    @ManyToOne
+    @JoinColumn(name = "id_entreprise", insertable = false)
+    private Entreprise entreprise;
+    public  Entreprise getcertification()                { return entreprise; }
+    public void setEntreprise(Entreprise entreprise) { this.entreprise = entreprise; }
 }

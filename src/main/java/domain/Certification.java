@@ -6,11 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "type_certification")
-public class TypeCertification {
+@Table(name = "certification")
+public class Certification {
     
     @Id
-    @Column(name = "id_type_certification")
+    @Column(name = "id_certification")
     private int id;
     public int getId()        { return id; }
     public void setId(int id) { this.id = id; }

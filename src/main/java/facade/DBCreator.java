@@ -1,6 +1,5 @@
 package facade;
 
-import academy.*;
 import domain.*;
 
 import java.math.BigInteger;
@@ -62,24 +61,16 @@ public class DBCreator {
         offreEmploi.setNbrPostes(2);
         RHModel.create(offreEmploi);
     
-        RecruteurExterne recruteurExterne = new RecruteurExterne();
-        recruteurExterne.setPrenom("Bob");
-        recruteurExterne.setNom("Roberts");
-        recruteurExterne.setTelephone(BigInteger.valueOf(123456789));
-        recruteurExterne.setEmail("bob@cgi.com");
-        RHModel.create(recruteurExterne);
+        Recruteur recruteur = new Recruteur();
+        recruteur.setPrenom("Alice");
+        recruteur.setNom("Merveille");
+        recruteur.setTelephone(BigInteger.valueOf(1895554321));
+        recruteur.setEmail("alice@rh.com");
+        recruteur.setNas(BigInteger.valueOf(123456789));
+        recruteur.setCommission(12);
+        RHModel.create(recruteur);
     
-    
-        RecruteurInterne recruteurInterne = new RecruteurInterne();
-        recruteurInterne.setPrenom("Alice");
-        recruteurInterne.setNom("Merveille");
-        recruteurInterne.setTelephone(BigInteger.valueOf(1895554321));
-        recruteurInterne.setEmail("alice@rh.com");
-        recruteurInterne.setNas(BigInteger.valueOf(123456789));
-        recruteurInterne.setCommission(12);
-        RHModel.create(recruteurInterne);
-    
-        TypeCertification typeCertification = new TypeCertification();
+        Certification typeCertification = new Certification();
         typeCertification.setName("DEC en Informatique de gestion");
         typeCertification.setDescription("Programmation, Base de donnee, Interface graphique");
         RHModel.create(typeCertification);
@@ -88,7 +79,7 @@ public class DBCreator {
         typeEmploi.setName("Informatique");
         typeEmploi.setDescription("Emploi relie au domaine de l'informatique");
         RHModel.create(typeEmploi);
-    
+        
     }
         
         
