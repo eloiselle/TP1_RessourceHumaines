@@ -6,7 +6,7 @@
     <persistence-unit name="org.hibernate.tutorial.jpa">
  
         <properties>
-            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost/rh_db"/>
             <property name="hibernate.connection.autocommit" value="false"/>
             <property name="hibernate.connection.username" value="java"/>
@@ -15,8 +15,10 @@
             <property name="hibernate.connection.CharSet" value="utf8"/>
             <property name="hibernate.connection.characterEncoding" value="utf8"/>
             <property name="hibernate.connection.useUnicode" value="true"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.connection.autocommit" value="false"/>
+            
             <!-- use encache provider-->
             <!--<property name="hibernate.cache.region.factory_class"-->
             <!--value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>-->

@@ -1,18 +1,23 @@
 TODO:
 
-
-    Backend:
-
-
-
-
-
-    FrontEnd:
+    Modelisation:
+        Faire le schema de fenetre # Anthony
 
 
 
 
+    Model: # Anthony
+        Mettre a jour les proprietes des classes
 
 
-    Remise:
+    Controller: # Zachary
+        Regarder comment matcher les objets avec les proprietes des composantes Swing
 
+    View: # Emile
+        Faire les interface
+
+
+    Remise2:
+        # 12 mars avant 14:30
+        Inclure les documents de modelisation
+        Faire les PDF, Zip et whatever
