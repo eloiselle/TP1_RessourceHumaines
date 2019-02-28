@@ -3,6 +3,7 @@ package facade;
 import domain.*;
 
 import java.math.BigInteger;
+import java.util.Set;
 
 public class DBCreator {
     
@@ -81,7 +82,7 @@ public class DBCreator {
         Competence cmpJava = new Competence();
         cmpJava.setName("Java");
         cmpJava.setDescription("Programmation OOP avec Java");
-        cmpJava.setCertification(certification);
+        cmpJava.setCertification(null);
         RHModel.create(cmpJava);
     
         Competence cmpJS = new Competence();
@@ -105,11 +106,11 @@ public class DBCreator {
         candidat.setEmail("coteanthony0@gmail.com");
         candidat.setNAS(BigInteger.valueOf(123456789));
         candidat.setTelephone(BigInteger.valueOf(1892448451));
-        
-//        candidat.getCompetences().add(cmpJava);
-//        candidat.getCompetences().add(cmpCpp);
+
+        candidat.getCompetences().add(cmpJava);
+        candidat.getCompetences().add(cmpCpp);
         RHModel.ajouteCandidat(candidat);
-    
+        
 
         Emploi emploi = new Emploi();
         emploi.setTitre("Programmeur");

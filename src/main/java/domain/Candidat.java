@@ -2,6 +2,7 @@ package domain;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -44,7 +45,7 @@ public class Candidat {
     @JoinTable(name="ta_candidat_competence",
             joinColumns= @JoinColumn(name="id_candidat", referencedColumnName="id_candidat"),
             inverseJoinColumns= @JoinColumn(name="id_competence", referencedColumnName="id_competence"))
-    private Set<Competence> competences;
+    private Set<Competence> competences = new HashSet <>();
     public Set<Competence> getCompetences()                  { return competences; }
     public void setCompetences(Set <Competence> competences) { this.competences = competences; }
     

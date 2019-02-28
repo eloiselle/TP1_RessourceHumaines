@@ -1,6 +1,7 @@
 package domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class Competence {
     public String getName()          { return name; }
     public void setName(String name) { this.name = name; }
     
-    @Column(name = "description") String description;
+    @Column(name = "description") private String description;
     public String getDescription()                 { return description; }
     public void setDescription(String description) { this.description = description; }
     
@@ -30,7 +31,7 @@ public class Competence {
     public void setCertification(Certification certification) { this.certification = certification; }
     
     @ManyToMany(mappedBy="competences")
-    private Set <Candidat> candidats;
+    private Set <Candidat> candidats = new HashSet <>();
     public Set<Candidat> getCustomers() { return candidats; }
     public void setCandidats(Set <Candidat> candidats) { this.candidats = candidats; }
     
@@ -51,10 +52,10 @@ public class Competence {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Competence that = (Competence) o;
-        return id == that.id && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(certification, that.certification);
+        return id == that.id && Objects.equals(name, that.name);
     }
     @Override
-    public int hashCode() { return Objects.hash(id, name, description, certification); }
+    public int hashCode() { return Objects.hash(id, name, description); }
     
     @Override
     public String toString() {
