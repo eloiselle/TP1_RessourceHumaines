@@ -1,11 +1,9 @@
 package domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "candidat")
@@ -13,6 +11,7 @@ public class Candidat {
     
     @Id
     @Column(name = "id_candidat")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     public int getId()        { return id; }
     public void setId(int id) { this.id = id; }
@@ -41,7 +40,15 @@ public class Candidat {
     public BigInteger getNAS()         { return NAS; }
     public void setNAS(BigInteger NAS) { this.NAS = NAS; }
     
-    public Candidat()                  { }
+    @ManyToMany
+    @JoinTable(name="ta_candidat_competence",
+            joinColumns= @JoinColumn(name="id_candidat", referencedColumnName="id_candidat"),
+            inverseJoinColumns= @JoinColumn(name="id_competence", referencedColumnName="id_competence"))
+    private Set<Competence> competences;
+    public Set<Competence> getCompetences()                  { return competences; }
+    public void setCompetences(Set <Competence> competences) { this.competences = competences; }
+    
+    public Candidat() { }
     
     public Candidat(int id, String nom, String prenom, BigInteger telephone, String email, String dateNaissance, BigInteger NAS) {
         

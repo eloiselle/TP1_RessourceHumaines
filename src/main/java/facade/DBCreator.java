@@ -67,6 +67,35 @@ public class DBCreator {
         eoeProcessing.setDescription("L'entreprise est en train d'evaluer les candidats");
         RHModel.create(eoeProcessing);
         
+        
+        // Certification
+        
+        Certification certification = new Certification();
+        certification.setName("DEC en Informatique de gestion");
+        certification.setDescription("Programmation, Base de donnees, Interface graphique, ...");
+        RHModel.create(certification);
+    
+
+        // Competences
+        
+        Competence cmpJava = new Competence();
+        cmpJava.setName("Java");
+        cmpJava.setDescription("Programmation OOP avec Java");
+        cmpJava.setCertification(certification);
+        RHModel.create(cmpJava);
+    
+        Competence cmpJS = new Competence();
+        cmpJS.setName("Javascript");
+        cmpJS.setDescription("Programmation avec Javascript");
+        cmpJS.setCertification(certification);
+        RHModel.create(cmpJS);
+        
+        Competence cmpCpp = new Competence();
+        cmpCpp.setName("C++");
+        cmpCpp.setDescription("Programmation en C++ avec pointeurs");
+        cmpCpp.setCertification(certification);
+        RHModel.create(cmpCpp);
+        
         // TEST DATA
     
         Candidat candidat = new Candidat();
@@ -76,24 +105,16 @@ public class DBCreator {
         candidat.setEmail("coteanthony0@gmail.com");
         candidat.setNAS(BigInteger.valueOf(123456789));
         candidat.setTelephone(BigInteger.valueOf(1892448451));
+        
+//        candidat.getCompetences().add(cmpJava);
+//        candidat.getCompetences().add(cmpCpp);
         RHModel.ajouteCandidat(candidat);
     
-        Certification certification = new Certification();
-        certification.setName("DEC en Informatique de gestion");
-        certification.setDescription("Programmation, Base de donnees, Interface graphique, ...");
-        RHModel.create(certification);
-    
 
-        Competence competence = new Competence();
-        competence.setName("Java");
-        competence.setDescription("Programmation OOP avec Java");
-        competence.setCertification(certification);
-        RHModel.create(competence);
-    
         Emploi emploi = new Emploi();
         emploi.setTitre("Programmeur");
         emploi.setDescription("Tapper au hasard sur un clavier jusqu'a ce que ca compile");
-        emploi.setTypeEmploi(teService);
+        emploi.setTypeEmploi(teInformatique);
         RHModel.create(emploi);
     
         Entreprise entreprise = new Entreprise();
@@ -132,13 +153,7 @@ public class DBCreator {
         application.setOffreEmploi(offreEmploi);
         RHModel.create(application);
     
-
-
+    
+        System.out.println("Database generation complete.");
     }
-        
-        
-    
-    
-    
-    
 }

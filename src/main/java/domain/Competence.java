@@ -2,6 +2,7 @@ package domain;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "competence")
@@ -9,6 +10,7 @@ public class Competence {
     
     @Id
     @Column(name = "id_competence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     public int getId()        { return id; }
     public void setId(int id) { this.id = id; }
@@ -27,7 +29,13 @@ public class Competence {
     public Certification getCertification()                   { return certification; }
     public void setCertification(Certification certification) { this.certification = certification; }
     
-    public Competence()                                       { }
+    @ManyToMany(mappedBy="competences")
+    private Set <Candidat> candidats;
+    public Set<Candidat> getCustomers() { return candidats; }
+    public void setCandidats(Set <Candidat> candidats) { this.candidats = candidats; }
+    
+    
+    public Competence() { }
     
     public Competence(int id, String name, String description, Certification certification) {
         

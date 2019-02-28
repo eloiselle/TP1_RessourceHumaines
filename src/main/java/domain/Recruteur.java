@@ -1,16 +1,16 @@
 package domain;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.Objects;
 
+@Entity
+@Table(name = "recruteur")
 public class Recruteur {
     
     @Id
     @Column(name = "id_recruteur")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     public int getId()        { return id; }
     public void setId(int id) { this.id = id; }

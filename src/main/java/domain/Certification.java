@@ -1,9 +1,6 @@
 package domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +9,7 @@ public class Certification {
     
     @Id
     @Column(name = "id_certification")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     public int getId()        { return id; }
     public void setId(int id) { this.id = id; }
