@@ -30,10 +30,10 @@ public class Competence {
     public Certification getCertification()                   { return certification; }
     public void setCertification(Certification certification) { this.certification = certification; }
     
-    @ManyToMany(mappedBy="competences")
-    private Set <Candidat> candidats = new HashSet <>();
-    public Set<Candidat> getCustomers() { return candidats; }
-    public void setCandidats(Set <Candidat> candidats) { this.candidats = candidats; }
+//    @ManyToMany(mappedBy="competences")
+//    private Set <Candidat> candidats = new HashSet <>();
+//    public Set<Candidat> getCustomers() { return candidats; }
+//    public void setCandidats(Set <Candidat> candidats) { this.candidats = candidats; }
     
     
     public Competence() { }

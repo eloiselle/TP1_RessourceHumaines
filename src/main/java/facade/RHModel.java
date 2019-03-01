@@ -1,11 +1,8 @@
 package facade;
 
 
-import academy.*;
 import domain.Candidat;
 import utils.PersistenceManager;
-
-import javax.persistence.EntityManager;
 
 
 /**
@@ -22,27 +19,27 @@ public class RHModel extends PersistenceManager {
 //    public static boolean ajouteProfesseur(Professeur p) { return create(p); }
 //
 //    /** Ajout un nouvel cours dans la database */
-//    public static boolean ajouterCours(Cours c, boolean isCascading) {
+//    public static boolean ajouterCours(CompetenceRequired c, boolean isCascading) {
 //
 //        if (isCascading) {
-//            update(c.getCurriculum());
-//            update(c.getProfesseur());
+//            update(c.getCandidat());
+//            update(c.getCompetence());
 //        }
 //        create(c);
 //        return true;
 //    }
 //
 //    /**     Modifi le cours
-//     @param c Cours a mettre a jour
+//     @param c CompetenceRequired a mettre a jour
 //     @return si ca a reussi
 //     */
-//    public static Cours changerCours(Cours c) {
+//    public static CompetenceRequired changerCours(CompetenceRequired c) {
 //
 //        // Modifi les sous-elements
-//        c.setCurriculum((Curriculum) update(c.getCurriculum()));
-//        c.setProfesseur((Professeur) update(c.getProfesseur()));
+//        c.setCandidat((Curriculum) update(c.getCandidat()));
+//        c.setCompetence((Professeur) update(c.getCompetence()));
 //
-//        return (Cours) update(c);
+//        return (CompetenceRequired) update(c);
 //    }
 //
 //    /**     Change l'etat de l'inscription pour la mettre a INACTIVE
@@ -75,8 +72,8 @@ public class RHModel extends PersistenceManager {
 //    public static Instrument loadInstrument(int id) { return emFactory.createEntityManager().find(Instrument.class, id); }
 //    public static Professeur loadProfesseur(int id) { return emFactory.createEntityManager().find(Professeur.class, id); }
 //
-//    public static Cours loadCours(int id_curriculum, int id_professeur) {
-//        return emFactory.createEntityManager().find(Cours.class, new CoursId(id_curriculum,id_professeur));
+//    public static CompetenceRequired loadCours(int id_curriculum, int id_professeur) {
+//        return emFactory.createEntityManager().find(CompetenceRequired.class, new CompetenceRequiredId(id_curriculum,id_professeur));
 //    }
 //
 //    /** Verifie si ca existe dans la base de donnees
