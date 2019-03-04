@@ -1,41 +1,36 @@
 package launcher;
 
-import facade.RHModel;
-
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class CertificationView {
     
-    CertificationController ctrl;
-    private static final String TITLE        = "Head Hunter - Certification";
-    private static final int    MIN_WIDTH    = 400;
-    private static final int    MIN_HEIGHT   = 100;
-    private static final String DEFAULT_TEXT = "Choose one option in the menu";
-    private              JFrame f;
-    private              JLabel label;
-    private              JLabel lNom;
-    private              JLabel lDesc;
-    private              int    count;
+    private              CertificationController ctrl;
+    private static final String                  TITLE      = "Head Hunter - Certification";
+    private static final int                     MIN_WIDTH  = 400;
+    private static final int                     MIN_HEIGHT = 100;
+    private static final int                     NOT_IN_DB  = 0;
+    private              JFrame                  f;
+    private              JLabel                  lID;
+    private              JLabel                  lNom;
+    private              JLabel                  lDesc;
     
+    private JTextField tfNom;
+    private JTextArea  taDesc;
     
-    JTextField tfNom;
-    JTextArea  taDesc;
+    private JPanel leftPanel;
+    private JPanel rightPanel;
+    private JPanel statusPanel;
+    private JLabel statusLabel;
     
-    JPanel leftPanel;
-    JPanel rightPanel;
-    JPanel statusPanel;
-    
-    
-    JButton bUpdate;
-    JButton bSaveToObject;
-    JButton bSaveToDB;
-    JButton bDelete;
+    private JButton bRefresh;
+    private JButton bSave;
+    private JButton bDelete;
+    private JButton bNew;
+    private JButton bLoad;
     
     // ************************************************************************
     
@@ -44,19 +39,18 @@ public class CertificationView {
     
     /** Main */
     
-    public void run()  throws ClassNotFoundException{
+    public void run() throws ClassNotFoundException {
         
-        RHModel.init();
         initFrame();
+        changeStatusBar("Init");
     }
     
     public void initFrame() {
         
-        
         f = new JFrame(TITLE);
         initFrameElements();
         initFrameProperties();
-        updateView();
+        refresh();
     }
     
     public void initFrameProperties() {
@@ -73,58 +67,52 @@ public class CertificationView {
     
     public void initFrameElements() {
         
-        // Label
-        label = new JLabel("id : ");
-        lNom = new JLabel("Nom : ");
-        lDesc = new JLabel("Description : ");
-        
-        // Button
-        
-        bUpdate = new JButton("Update");
-        bUpdate.addActionListener(e -> handleUpdateButtonClicked());
-        
-        bSaveToObject = new JButton("SaveToObject");
-        bSaveToObject.addActionListener(e -> ctrl.saveToObject());
-        
-        bSaveToDB = new JButton("SaveToDB");
-        bSaveToDB.addActionListener(e -> ctrl.saveToDB());
-        
-        bDelete = new JButton("Delete");
-        bDelete.addActionListener(e -> ctrl.delete());
-        
-        // Field
-        tfNom = new JTextField();
-        tfNom.addActionListener(new ActionListener() {
-            
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) { handleFieldChanged(); }
-        });
-        
-        taDesc = new JTextArea();
-        taDesc.setRows(5);
-        taDesc.getDocument().addDocumentListener(new DocumentListener() {
-            
-            @Override
-            public void removeUpdate(DocumentEvent e) { handleFieldChanged(); }
-            @Override
-            public void insertUpdate(DocumentEvent e) { handleFieldChanged(); }
-            @Override
-            public void changedUpdate(DocumentEvent arg0) { handleFieldChanged(); }
-        });
+        initLabels();
+        initButtons();
+        initFields();
         
         initLeftPanel();
-        leftPanel.add(bUpdate);
-        leftPanel.add(bSaveToObject);
-        leftPanel.add(bSaveToDB);
-        leftPanel.add(bDelete);
-        
         initRightPanel();
         initStatusBar();
         
-        // Layout
-        f.add(leftPanel, BorderLayout.WEST);
-        f.add(rightPanel, BorderLayout.CENTER);
-        f.add(statusPanel, BorderLayout.SOUTH);
+        initLayout();
+    }
+    
+    
+    public void initLabels() {
+        
+        lID = new JLabel("ID : ");
+        lNom = new JLabel("Nom : ");
+        lDesc = new JLabel("Description : ");
+        
+    }
+    
+    public void initFields() {
+        
+        tfNom = new JTextField();
+        tfNom.getDocument().addDocumentListener(defaultFieldListener());
+        
+        taDesc = new JTextArea();
+        taDesc.setRows(5);
+        taDesc.getDocument().addDocumentListener(defaultFieldListener());
+    }
+    
+    public void initButtons() {
+        
+        bLoad = new JButton("Load");
+        bLoad.addActionListener(e -> handleLoadButtonClicked());
+        
+        bRefresh = new JButton("Refresh");
+        bRefresh.addActionListener(e -> handleRefreshButtonClicked());
+        
+        bSave = new JButton("Save");
+        bSave.addActionListener(e -> handleSaveButtonClicked());
+        
+        bDelete = new JButton("Delete");
+        bDelete.addActionListener(e -> handleDeleteButtonClicked());
+        
+        bNew = new JButton("New");
+        bNew.addActionListener(e -> handleNewButtonClicked());
         
     }
     
@@ -135,7 +123,7 @@ public class CertificationView {
         statusPanel.setPreferredSize(new Dimension(f.getWidth(), 16));
         statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
         
-        JLabel statusLabel = new JLabel("status");
+        statusLabel = new JLabel("");
         statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
         statusPanel.add(statusLabel);
         
@@ -147,6 +135,11 @@ public class CertificationView {
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS)); // Vertical
         leftPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         
+        leftPanel.add(bNew);
+        leftPanel.add(bLoad);
+        leftPanel.add(bSave);
+        leftPanel.add(bDelete);
+        leftPanel.add(bRefresh);
     }
     
     public void initRightPanel() {
@@ -154,7 +147,7 @@ public class CertificationView {
         rightPanel = new JPanel();
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS)); // Vertical
         rightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        rightPanel.add(label);
+        rightPanel.add(lID);
         rightPanel.add(lNom);
         rightPanel.add(tfNom);
         rightPanel.add(lDesc);
@@ -162,37 +155,64 @@ public class CertificationView {
         
     }
     
+    public void initLayout() {
+        
+        f.add(leftPanel, BorderLayout.WEST);
+        f.add(rightPanel, BorderLayout.CENTER);
+        f.add(statusPanel, BorderLayout.SOUTH);
+        
+    }
+    
     // ************************************************************************
     
-    public void handleFieldChanged() {
-        
-        System.out.println("Field Changed");
-        ctrl.saveToObject();
-    }
+    // Handlers
+    public void handleFieldChanged() { ctrl.modify(); }
+    public void handleRefreshButtonClicked() { refresh(); }
+    public void handleLoadButtonClicked()    { ctrl.load();}
+    public void handleDeleteButtonClicked()  { ctrl.delete();}
+    public void handleSaveButtonClicked()    { ctrl.save();}
+    public void handleNewButtonClicked()     { ctrl.createNew();}
     
-    public void handleUpdateButtonClicked() {
-        
-        System.out.println("handleUpdateButtonClicked");
-        System.out.println(ctrl.getCertification());
-        updateView();
-    }
     
-    public void updateView() {
+    public void refresh() {
         
-        System.out.println("Updated");
+        // Refresh text field
+        tfNom.setText(ctrl.getCertification().getName());
+        taDesc.setText(ctrl.getCertification().getDescription());
         
-        if (ctrl.getCertification().getId() == 0) {
-            label.setText("Id : Unsaved");
+        // Handle saved/unsaved data
+        if (ctrl.getCertification().getId() == NOT_IN_DB) {
+            lID.setText("ID : Unsaved");
             bDelete.setEnabled(false);
         } else {
-            label.setText("Id : " + ctrl.getCertification().getId());
+            lID.setText("ID : " + ctrl.getCertification().getId());
             bDelete.setEnabled(true);
         }
+        
+        changeStatusBar("Refresh");
+        System.out.println(ctrl.getCertification());
     }
     
     // ************************************************************************
     
-    public String getNom()  { return tfNom.getText();}
-    public String getDesc() { return taDesc.getText();}
+    public String getNom()                     { return tfNom.getText();}
+    public String getDesc()                    { return taDesc.getText();}
+    
+    
+    public void changeStatusBar(String status) { statusLabel.setText(status);}
+    
+    /** Macro pour savoir quand un champ est changer */
+    public DocumentListener defaultFieldListener() {
+        
+        return new DocumentListener() {
+            
+            @Override
+            public void removeUpdate(DocumentEvent e) { handleFieldChanged(); }
+            @Override
+            public void insertUpdate(DocumentEvent e) { handleFieldChanged(); }
+            @Override
+            public void changedUpdate(DocumentEvent arg0) { handleFieldChanged(); }
+        };
+    }
     
 }

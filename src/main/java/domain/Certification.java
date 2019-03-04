@@ -24,7 +24,11 @@ public class Certification {
     
     // ************************************************************************
     
-    public Certification() {           }
+    public Certification() {
+        this.id = 0;
+        this.name = "";
+        this.description = "";
+    }
     
     public Certification(String name, String description) {
         

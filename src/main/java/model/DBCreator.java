@@ -1,4 +1,4 @@
-package facade;
+package model;
 
 import domain.*;
 
@@ -6,10 +6,10 @@ import java.math.BigInteger;
 
 public class DBCreator {
     
-    public static void main(String[] args) throws Exception{ new DBCreator().run(); }
+    public static void main(String[] args) throws Exception{ run(); }
     
     
-    public void run() throws Exception {
+    public static void run() throws Exception {
     
         RHModel.init();
         generateData();
@@ -17,7 +17,7 @@ public class DBCreator {
     }
     
     /** Generate data for the database */
-    public void generateData(){
+    public static void generateData(){
         
         // TYPE
         
@@ -156,17 +156,17 @@ public class DBCreator {
         System.out.println("Database generation complete.");
 
 //        System.out.println("Start traveling test");
-        emploi.getCompetenceRequireds()
-                .stream()
-                .map(CompetenceRequired::getCompetence)
-                .map(Competence::getCertification)
-                .forEach(System.out::println);
+//        emploi.getCompetenceRequireds()
+//                .stream()
+//                .map(CompetenceRequired::getCompetence)
+//                .map(Competence::getCertification)
+//                .forEach(System.out::println);
 //
 //        for (CompetenceAcquired ca: candidat.getCompetenceAcquireds()) {
 //            System.out.println(ca);
 //        }
     
-        RHModel.close();
+
         System.out.println("Done.");
     }
 }

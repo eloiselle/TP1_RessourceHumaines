@@ -1,14 +1,12 @@
 package domain;
 
-import facade.RHModel;
+import model.RHModel;
 
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Table(name = "candidat")

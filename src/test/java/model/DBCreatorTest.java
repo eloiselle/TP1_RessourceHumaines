@@ -1,4 +1,4 @@
-package facade;
+package model;
 
 import org.junit.*;
 

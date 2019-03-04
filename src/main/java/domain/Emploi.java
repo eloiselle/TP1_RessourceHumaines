@@ -1,6 +1,6 @@
 package domain;
 
-import facade.RHModel;
+import model.RHModel;
 
 import javax.persistence.*;
 import java.util.HashSet;
