@@ -54,8 +54,25 @@ public class OffreEmploi {
     public Recruteur getRecruteurExterne()                      { return recruteurExterne; }
     public void setRecruteurExterne(Recruteur recruteurExterne) { this.recruteurExterne = recruteurExterne; }
     
+    // ************************************************************************
     
     public OffreEmploi()                                        { }
+    
+    public OffreEmploi(int id, String dateParution, String dateFin, int nbrPostes, float salaireOffert, Emploi emploi,
+                       EtatOffreEmploi etatOffreEmploi, Recruteur recruteurInterne, Recruteur recruteurExterne) {
+        
+        this.id = id;
+        this.dateParution = dateParution;
+        this.dateFin = dateFin;
+        this.nbrPostes = nbrPostes;
+        this.salaireOffert = salaireOffert;
+        this.emploi = emploi;
+        this.etatOffreEmploi = etatOffreEmploi;
+        this.recruteurInterne = recruteurInterne;
+        this.recruteurExterne = recruteurExterne;
+    }
+    
+    // ************************************************************************
     
     @Override
     public boolean equals(Object o) {

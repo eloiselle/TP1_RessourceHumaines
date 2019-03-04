@@ -23,7 +23,18 @@ public class EtatOffreEmploi {
     public String getDescription()                 { return description; }
     public void setDescription(String description) { this.description = description; }
     
-    public EtatOffreEmploi()                       { }
+    // ************************************************************************
+    
+    public EtatOffreEmploi() {}
+    
+    public EtatOffreEmploi(int id, String name, String description) {
+        
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+    
+    // ************************************************************************
     
     @Override
     public boolean equals(Object o) {

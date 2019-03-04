@@ -41,13 +41,13 @@ public class Candidat {
     public BigInteger getNAS()         { return NAS; }
     public void setNAS(BigInteger NAS) { this.NAS = NAS; }
     
-//    @ManyToMany
-//    @JoinTable(name="ta_candidat_competence",
-//            joinColumns= @JoinColumn(name="id_candidat", referencedColumnName="id_candidat"),
-//            inverseJoinColumns= @JoinColumn(name="id_competence", referencedColumnName="id_competence"))
-//    private Set<Competence> competences = new HashSet <>();
-//    public Set<Competence> getCompetences()                  { return competences; }
-//    public void setCompetences(Set <Competence> competences) { this.competences = competences; }
+    @ManyToOne
+    @JoinColumn(name = "competence_acquired", insertable = false)
+    private CompetenceAcquired competenceAcquired;
+    public CompetenceAcquired getCompetenceAcquired()                   { return competenceAcquired; }
+    public void setCompetenceAcquired(CompetenceAcquired competenceAcquired) { this.competenceAcquired = competenceAcquired; }
+    
+    // ************************************************************************
     
     public Candidat() { }
     
@@ -61,6 +61,8 @@ public class Candidat {
         this.dateNaissance = dateNaissance;
         this.NAS = NAS;
     }
+    
+    // ************************************************************************
     
     @Override
     public boolean equals(Object o) {

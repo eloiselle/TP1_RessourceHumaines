@@ -50,7 +50,7 @@ public class CompetenceAcquired implements Serializable {
     public void setLevel(int level) { this.level = level; }
 
 
-    //*****************************************************
+    // ************************************************************************
 
 
     public CompetenceAcquired() {
@@ -70,6 +70,8 @@ public class CompetenceAcquired implements Serializable {
     }
 
 
+    // ************************************************************************
+    
     @Override
     public boolean equals(Object o) {
 

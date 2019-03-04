@@ -35,6 +35,7 @@ public class Competence {
 //    public Set<Candidat> getCustomers() { return candidats; }
 //    public void setCandidats(Set <Candidat> candidats) { this.candidats = candidats; }
     
+    // ************************************************************************
     
     public Competence() { }
     
@@ -45,6 +46,8 @@ public class Competence {
         this.description = description;
         this.certification = certification;
     }
+    
+    // ************************************************************************
     
     @Override
     public boolean equals(Object o) {

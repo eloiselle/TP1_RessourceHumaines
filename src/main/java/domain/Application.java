@@ -52,6 +52,8 @@ public class Application {
     public OffreEmploi getOffreEmploi()                 { return offre_emploi; }
     public void setOffreEmploi(OffreEmploi offreEmploi) { this.offre_emploi = offreEmploi; }
     
+    // ************************************************************************
+    
     public Application() {           }
     
     public Application(int id, String cvPath, String dateApplication, String dateEntrevue, String heureEntrevue,
@@ -67,6 +69,10 @@ public class Application {
         this.candidat = candidat;
         this.offre_emploi = offre_emploi;
     }
+    
+    
+    // ************************************************************************
+    
     @Override
     public boolean equals(Object o) {
         

@@ -22,6 +22,8 @@ public class Entreprise {
     public String getDescription()                 { return description; }
     public void setDescription(String description) { this.description = description; }
     
+    // ************************************************************************
+    
     public Entreprise()                            { }
     
     public Entreprise(int id, String name, String description) {
@@ -30,6 +32,8 @@ public class Entreprise {
         this.name = name;
         this.description = description;
     }
+    
+    // ************************************************************************
     
     @Override
     public boolean equals(Object o) {

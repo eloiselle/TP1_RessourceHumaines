@@ -9,6 +9,8 @@ public class CompetenceRequiredId implements Serializable {
     private int id_emploi;
     private int id_competence;
     
+    // ************************************************************************
+    
     /** Constructeur */
     public CompetenceRequiredId() {}
     
@@ -21,6 +23,8 @@ public class CompetenceRequiredId implements Serializable {
         this.id_emploi = id_emploi;
         this.id_competence = id_competence;
     }
+    
+    // ************************************************************************
     
     @Override
     public boolean equals(Object o) {

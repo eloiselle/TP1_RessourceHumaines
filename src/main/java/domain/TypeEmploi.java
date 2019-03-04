@@ -22,6 +22,8 @@ public class TypeEmploi {
     public String getDescription()                 { return description; }
     public void setDescription(String description) { this.description = description; }
     
+    // ************************************************************************
+    
     public TypeEmploi()                            { }
     
     public TypeEmploi(int id, String name, String description) {
@@ -30,6 +32,8 @@ public class TypeEmploi {
         this.name = name;
         this.description = description;
     }
+    
+    // ************************************************************************
     
     @Override
     public boolean equals(Object o) {

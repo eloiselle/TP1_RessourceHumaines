@@ -29,6 +29,14 @@ public class Emploi {
     public TypeEmploi getTypeEmploi()        { return typeEmploi; }
     public void setTypeEmploi(TypeEmploi typeEmploi) { this.typeEmploi = typeEmploi; }
     
+    @ManyToOne
+    @JoinColumn(name = "competence_required", insertable = false)
+    private CompetenceRequired competenceRequired;
+    public CompetenceRequired getCompetenceRequired()                   { return competenceRequired; }
+    public void setCompetenceRequired( CompetenceRequired competenceRequired) { this.competenceRequired= competenceRequired; }
+    
+    // ************************************************************************
+    
     public Emploi() {            }
     
     public Emploi(int id, String titre, String description, TypeEmploi typeEmploi) {
@@ -38,6 +46,8 @@ public class Emploi {
         this.description = description;
         this.typeEmploi = typeEmploi;
     }
+    
+    // ************************************************************************
     
     @Override
     public boolean equals(Object o) {

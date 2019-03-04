@@ -46,9 +46,12 @@ public class Recruteur {
     public Entreprise getcertification()             { return entreprise; }
     public void setEntreprise(Entreprise entreprise) { this.entreprise = entreprise; }
     
+    // ************************************************************************
+    
     public Recruteur()                               { }
     
-    public Recruteur(int id, String nom, String prenom, BigInteger telephone, String email, float commission, BigInteger nas, Entreprise entreprise) {
+    public Recruteur(int id, String nom, String prenom, BigInteger telephone, String email, float commission,
+                     BigInteger nas, Entreprise entreprise) {
         
         this.id = id;
         this.nom = nom;
@@ -59,6 +62,8 @@ public class Recruteur {
         this.nas = nas;
         this.entreprise = entreprise;
     }
+    
+    // ************************************************************************
     
     @Override
     public boolean equals(Object o) {

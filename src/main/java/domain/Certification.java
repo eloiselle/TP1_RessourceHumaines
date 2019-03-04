@@ -22,6 +22,8 @@ public class Certification {
     public String getDescription()                 { return description; }
     public void setDescription(String description) { this.description = description; }
     
+    // ************************************************************************
+    
     public Certification() {           }
     
     public Certification(int id, String name, String description) {
@@ -30,6 +32,8 @@ public class Certification {
         this.name = name;
         this.description = description;
     }
+    
+    // ************************************************************************
     
     @Override
     public boolean equals(Object o) {
