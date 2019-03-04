@@ -2,7 +2,10 @@ package facade;
 
 
 import domain.Candidat;
+import domain.Certification;
 import utils.PersistenceManager;
+
+import javax.persistence.EntityManager;
 
 
 /**
@@ -88,16 +91,16 @@ public class RHModel extends PersistenceManager {
 //     @return si l'etudiant existe dans la DB
 //     */
 //    public static boolean etudiantExist(int id) { return emFactory.createEntityManager().find(Etudiant.class, id) != null; }
-//
-//    /**      Essaye de supprimer un objet dans la DB */
-//    public static boolean tryToDeleteProfesseur(Professeur prof) {
-//
-//        EntityManager em = emFactory.createEntityManager();
-//        em.getTransaction().begin();
-//        prof = em.find(Professeur.class, ((Professeur) prof).getId());
-//        em.remove(prof);
-//
-//        return commit(em);
-//    }
+
+    /**      Essaye de supprimer un objet dans la DB */
+    public static boolean delete(Certification obj) {
+
+        EntityManager em = emFactory.createEntityManager();
+        em.getTransaction().begin();
+        obj = em.find(Certification.class, ((Certification) obj).getId());
+        em.remove(obj);
+
+        return commit(em);
+    }
     
 }
