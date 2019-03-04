@@ -26,6 +26,12 @@ public class Entreprise {
     
     public Entreprise()                            { }
     
+    public Entreprise(String name, String description) {
+        
+        this.name = name;
+        this.description = description;
+    }
+    
     public Entreprise(int id, String name, String description) {
         
         this.id = id;

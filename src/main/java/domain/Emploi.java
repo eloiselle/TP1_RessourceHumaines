@@ -1,7 +1,11 @@
 package domain;
 
+import facade.RHModel;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "emploi")
@@ -26,18 +30,17 @@ public class Emploi {
     @ManyToOne
     @JoinColumn(name = "id_type_emploi", insertable = false)
     private TypeEmploi typeEmploi;
-    public TypeEmploi getTypeEmploi()        { return typeEmploi; }
+    public TypeEmploi getTypeEmploi()                { return typeEmploi; }
     public void setTypeEmploi(TypeEmploi typeEmploi) { this.typeEmploi = typeEmploi; }
     
-    @ManyToOne
-    @JoinColumn(name = "competence_required", insertable = false)
-    private CompetenceRequired competenceRequired;
-    public CompetenceRequired getCompetenceRequired()                   { return competenceRequired; }
-    public void setCompetenceRequired( CompetenceRequired competenceRequired) { this.competenceRequired= competenceRequired; }
-    
+    @OneToMany(mappedBy = "id_emploi") private Set <CompetenceRequired> competenceRequireds = new HashSet <>();
+    public Set <CompetenceRequired> getCompetenceRequireds()                         { return competenceRequireds; }
+    public void setCompetenceRequireds(Set <CompetenceRequired> competenceRequireds) { this.competenceRequireds = competenceRequireds; }
     // ************************************************************************
     
-    public Emploi() {            }
+    public Emploi()             { }
+    
+    public Emploi(String titre) { this.titre = titre; }
     
     public Emploi(int id, String titre, String description, TypeEmploi typeEmploi) {
         
@@ -46,6 +49,19 @@ public class Emploi {
         this.description = description;
         this.typeEmploi = typeEmploi;
     }
+    
+    /**
+     Cree une Competence acquired pour le candidat
+     @param competence Competence
+     @param level      Niveau de competence
+     */
+    public void requiereCompetence(Competence competence, int level) {
+        
+        CompetenceRequired ca = new CompetenceRequired(this, competence, level);
+        competenceRequireds.add(ca);
+        RHModel.create(ca);
+    }
+    
     
     // ************************************************************************
     

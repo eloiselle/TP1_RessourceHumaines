@@ -3,7 +3,6 @@ package facade;
 import domain.*;
 
 import java.math.BigInteger;
-import java.util.Set;
 
 public class DBCreator {
     
@@ -13,15 +12,11 @@ public class DBCreator {
     public void run() throws Exception {
     
         RHModel.init();
-    
-
         generateData();
-        
         RHModel.close();
-    
     }
     
-
+    /** Generate data for the database */
     public void generateData(){
         
         // TYPE
@@ -106,10 +101,10 @@ public class DBCreator {
         candidat.setEmail("coteanthony0@gmail.com");
         candidat.setNAS(BigInteger.valueOf(123456789));
         candidat.setTelephone(BigInteger.valueOf(1892448451));
-
-        candidat.getCompetences().add(cmpJava);
-        candidat.getCompetences().add(cmpCpp);
-        RHModel.ajouteCandidat(candidat);
+        RHModel.create(candidat);
+        
+        candidat.earnCompetence(cmpJava, 3);
+        RHModel.update(candidat);
         
 
         Emploi emploi = new Emploi();
@@ -117,6 +112,10 @@ public class DBCreator {
         emploi.setDescription("Tapper au hasard sur un clavier jusqu'a ce que ca compile");
         emploi.setTypeEmploi(teInformatique);
         RHModel.create(emploi);
+        
+        emploi.requiereCompetence(cmpJS, 1);
+        RHModel.update(emploi);
+        
     
         Entreprise entreprise = new Entreprise();
         entreprise.setName("CGI");
@@ -154,7 +153,20 @@ public class DBCreator {
         application.setOffreEmploi(offreEmploi);
         RHModel.create(application);
     
-    
         System.out.println("Database generation complete.");
+
+//        System.out.println("Start traveling test");
+        emploi.getCompetenceRequireds()
+                .stream()
+                .map(CompetenceRequired::getCompetence)
+                .map(Competence::getCertification)
+                .forEach(System.out::println);
+//
+//        for (CompetenceAcquired ca: candidat.getCompetenceAcquireds()) {
+//            System.out.println(ca);
+//        }
+    
+        RHModel.close();
+        System.out.println("Done.");
     }
 }

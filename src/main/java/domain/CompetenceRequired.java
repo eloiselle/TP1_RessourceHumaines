@@ -26,12 +26,12 @@ public class CompetenceRequired implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "id_emploi", insertable = false)
-    private Candidat candidat;
-    public Candidat getCandidat() { return candidat; }
-    public void setCandidat(Candidat candidat) {
+    private Emploi emploi;
+    public Emploi getEmploi() { return emploi; }
+    public void setEmploi(Emploi emploi) {
         
-        this.candidat = candidat;
-        id_emploi = candidat.getId();
+        this.emploi = emploi;
+        id_emploi = emploi.getId();
     }
     
     @ManyToOne
@@ -57,16 +57,16 @@ public class CompetenceRequired implements Serializable {
     
     public CompetenceRequired() {
         
-        this.candidat = new Candidat();
+        this.emploi = new Emploi();
         this.competence = new Competence();
         this.level = 0;
     }
     
-    public CompetenceRequired(Candidat candidat, Competence competence, int level) {
+    public CompetenceRequired(Emploi emploi, Competence competence, int level) {
         
-        this.id_emploi = candidat.getId();
+        this.id_emploi = emploi.getId();
         this.id_competence = competence.getId();
-        this.candidat = candidat;
+        this.emploi = emploi;
         this.competence = competence;
         this.level = level;
     }
@@ -80,7 +80,7 @@ public class CompetenceRequired implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CompetenceRequired competenceAcquired = (CompetenceRequired) o;
-        return getId_emploi() == competenceAcquired.getId_emploi() && getId_competence() == competenceAcquired.getId_competence() && Objects.equals(level, competenceAcquired.level);
+        return getId_emploi() == competenceAcquired.getId_emploi() && getId_competence() == competenceAcquired.getId_competence();
     }
     
     @Override
@@ -89,6 +89,6 @@ public class CompetenceRequired implements Serializable {
     @Override
     public String toString() {
         
-        return "CompetenceRequired{" + "id_term=" + level + ", id_emploi=" + candidat + ", id_competence=" + competence + '}';
+        return "CompetenceRequired{" + "id_term=" + level + ", id_emploi=" + emploi + ", id_competence=" + competence + '}';
     }
 }

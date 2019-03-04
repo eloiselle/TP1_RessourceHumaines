@@ -50,6 +50,12 @@ public class Recruteur {
     
     public Recruteur()                               { }
     
+    public Recruteur(String nom, String prenom) {
+        
+        this.nom = nom;
+        this.prenom = prenom;
+    }
+    
     public Recruteur(int id, String nom, String prenom, BigInteger telephone, String email, float commission,
                      BigInteger nas, Entreprise entreprise) {
         

@@ -3,7 +3,7 @@ TODO:
     Modelisation:
         Faire le schema de fenetre # Anthony
         Choisir sur quoi on fait nos tests unitaires
-
+        Decider si on synchonise les objet avec la DB en temps reel ou sur demande
 
 
     Model: # Anthony

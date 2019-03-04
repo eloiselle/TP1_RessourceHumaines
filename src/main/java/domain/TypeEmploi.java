@@ -32,6 +32,12 @@ public class TypeEmploi {
         this.name = name;
         this.description = description;
     }
+
+    public TypeEmploi(String name, String description) {
+        
+        this.name = name;
+        this.description = description;
+    }
     
     // ************************************************************************
     

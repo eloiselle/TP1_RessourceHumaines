@@ -27,6 +27,11 @@ public class EtatOffreEmploi {
     
     public EtatOffreEmploi() {}
     
+    public EtatOffreEmploi(String name, String description) {
+        
+        this.name = name;
+        this.description = description;
+    }
     public EtatOffreEmploi(int id, String name, String description) {
         
         this.id = id;

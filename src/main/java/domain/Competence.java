@@ -16,7 +16,7 @@ public class Competence {
     public int getId()        { return id; }
     public void setId(int id) { this.id = id; }
     
-    @Column(name = "name") String name;
+    @Column(name = "name") private String name;
     public String getName()          { return name; }
     public void setName(String name) { this.name = name; }
     
@@ -38,6 +38,12 @@ public class Competence {
     // ************************************************************************
     
     public Competence() { }
+    
+    public Competence(String name, String description) {
+        
+        this.name = name;
+        this.description = description;
+    }
     
     public Competence(int id, String name, String description, Certification certification) {
         

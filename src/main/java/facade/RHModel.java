@@ -6,14 +6,21 @@ import utils.PersistenceManager;
 
 
 /**
- Interface demandee par le client */
+ Classe statique pour les besoin du client
+ Il est possible de juste utiliser PersistenceManager qui est generique
+ RHModel permet de creer des methodes specifique
+ */
 public class RHModel extends PersistenceManager {
     
     /** Constructeur */
     public RHModel() throws ClassNotFoundException { init(); }
     
+
+
     /** Ajout un nouvel etudiant dans la database */
     public static boolean ajouteCandidat(Candidat c)     { return create(c); }
+    
+    
 //
 //    /** Ajout un nouvel professeur dans la database */
 //    public static boolean ajouteProfesseur(Professeur p) { return create(p); }

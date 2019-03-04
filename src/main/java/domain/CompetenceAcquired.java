@@ -45,7 +45,7 @@ public class CompetenceAcquired implements Serializable {
 
     @Id
     @Column(name = "level")
-    private int level; // Ex : "H18", "A19", "E19"
+    private int level;
     public int getLevel()           { return level; }
     public void setLevel(int level) { this.level = level; }
 
@@ -68,6 +68,7 @@ public class CompetenceAcquired implements Serializable {
         this.competence = competence;
         this.level = level;
     }
+    
 
 
     // ************************************************************************
@@ -78,15 +79,15 @@ public class CompetenceAcquired implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CompetenceAcquired competenceAcquired = (CompetenceAcquired) o;
-        return getId_candidat() == competenceAcquired.getId_candidat() && getId_competence()== competenceAcquired.getId_competence()&& Objects.equals(level, competenceAcquired.level);
+        return getId_candidat() == competenceAcquired.getId_candidat() && getId_competence()== competenceAcquired.getId_competence();
     }
 
     @Override
     public int hashCode() { return Objects.hash(getId_candidat(), getId_competence(), level); }
-
+    
     @Override
     public String toString() {
-
-        return "CompetenceRequired{" + "id_term=" + level + ", id_candidat=" + candidat + ", id_competence=" + competence + '}';
+        
+        return "CompetenceAcquired{" + "id_candidat=" + id_candidat + ", id_competence=" + id_competence + ", candidat=" + candidat + ", competence=" + competence + ", level=" + level + '}';
     }
 }
