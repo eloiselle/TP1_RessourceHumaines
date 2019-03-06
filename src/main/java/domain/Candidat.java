@@ -1,6 +1,7 @@
 package domain;
 
 import model.RHModel;
+import utils.IdInterface;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -10,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "candidat")
-public class Candidat {
+public class Candidat  implements IdInterface {
     
     @Id
     @Column(name = "id_candidat")

@@ -1,6 +1,7 @@
 package domain;
 
 import model.RHModel;
+import utils.IdInterface;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "emploi")
-public class Emploi {
+public class Emploi  implements IdInterface {
     
     @Id
     @Column(name = "id_emploi")

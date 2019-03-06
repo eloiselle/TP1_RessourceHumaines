@@ -98,7 +98,7 @@ public class DBCreator {
         candidat.setPrenom("Anthony");
         candidat.setNom("Cote");
         candidat.setDateNaissance("1986-11-24");
-        candidat.setEmail("coteanthony0@gmail.com");
+        candidat.setEmail("coteanthony0@fakemail.com");
         candidat.setNAS(BigInteger.valueOf(123456789));
         candidat.setTelephone(BigInteger.valueOf(1892448451));
         RHModel.create(candidat);
@@ -159,7 +159,7 @@ public class DBCreator {
 //        emploi.getCompetenceRequireds()
 //                .stream()
 //                .map(CompetenceRequired::getCompetence)
-//                .map(Competence::getCertification)
+//                .map(Competence::getObj)
 //                .forEach(System.out::println);
 //
 //        for (CompetenceAcquired ca: candidat.getCompetenceAcquireds()) {

@@ -29,7 +29,7 @@
 //    @ManyToOne
 //    @JoinColumn(name = "id_certification", insertable = false)
 //    private Certification certification;
-//    public Certification getCertification()                   { return certification; }
+//    public Certification getObj()                   { return certification; }
 //    public void setCertification(Certification certification) { this.certification = certification; }
 //
 //    @ManyToMany(mappedBy="competences")

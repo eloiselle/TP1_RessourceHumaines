@@ -1,11 +1,13 @@
 package domain;
 
+import utils.IdInterface;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "entreprise")
-public class Entreprise {
+public class Entreprise implements IdInterface {
     
     @Id
     @Column(name = "id_entreprise")

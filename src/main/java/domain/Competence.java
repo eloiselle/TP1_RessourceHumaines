@@ -1,5 +1,7 @@
 package domain;
 
+import utils.IdInterface;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -7,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "competence")
-public class Competence {
+public class Competence  implements IdInterface {
     
     @Id
     @Column(name = "id_competence")
