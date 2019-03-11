@@ -1,14 +1,17 @@
 package domain;
 
+import utils.IdInterface;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "offre_emploi")
-public class OffreEmploi {
+public class OffreEmploi  implements IdInterface {
     
     @Id
     @Column(name = "id_offre_emploi")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     public int getId()        { return id; }
     public void setId(int id) { this.id = id; }
@@ -53,8 +56,25 @@ public class OffreEmploi {
     public Recruteur getRecruteurExterne()                      { return recruteurExterne; }
     public void setRecruteurExterne(Recruteur recruteurExterne) { this.recruteurExterne = recruteurExterne; }
     
+    // ************************************************************************
     
     public OffreEmploi()                                        { }
+    
+    public OffreEmploi(int id, String dateParution, String dateFin, int nbrPostes, float salaireOffert, Emploi emploi,
+                       EtatOffreEmploi etatOffreEmploi, Recruteur recruteurInterne, Recruteur recruteurExterne) {
+        
+        this.id = id;
+        this.dateParution = dateParution;
+        this.dateFin = dateFin;
+        this.nbrPostes = nbrPostes;
+        this.salaireOffert = salaireOffert;
+        this.emploi = emploi;
+        this.etatOffreEmploi = etatOffreEmploi;
+        this.recruteurInterne = recruteurInterne;
+        this.recruteurExterne = recruteurExterne;
+    }
+    
+    // ************************************************************************
     
     @Override
     public boolean equals(Object o) {

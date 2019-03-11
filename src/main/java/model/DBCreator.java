@@ -1,4 +1,4 @@
-package facade;
+package model;
 
 import domain.*;
 
@@ -6,22 +6,18 @@ import java.math.BigInteger;
 
 public class DBCreator {
     
-    public static void main(String[] args) throws Exception{ new DBCreator().run(); }
+    public static void main(String[] args) throws Exception{ run(); }
     
     
-    public void run() throws Exception {
+    public static void run() throws Exception {
     
         RHModel.init();
-    
-
         generateData();
-        
         RHModel.close();
-    
     }
     
-
-    public void generateData(){
+    /** Generate data for the database */
+    public static void generateData(){
         
         // TYPE
         
@@ -67,34 +63,59 @@ public class DBCreator {
         eoeProcessing.setDescription("L'entreprise est en train d'evaluer les candidats");
         RHModel.create(eoeProcessing);
         
-        // TEST DATA
-    
-        Candidat candidat = new Candidat();
-        candidat.setPrenom("Anthony");
-        candidat.setNom("Cote");
-        candidat.setDateNaissance("1986-11-24");
-        candidat.setEmail("coteanthony0@gmail.com");
-        candidat.setNAS(BigInteger.valueOf(123456789));
-        candidat.setTelephone(BigInteger.valueOf(1892448451));
-        RHModel.ajouteCandidat(candidat);
-    
+        
+        // Certification
+        
         Certification certification = new Certification();
         certification.setName("DEC en Informatique de gestion");
         certification.setDescription("Programmation, Base de donnees, Interface graphique, ...");
         RHModel.create(certification);
     
 
-        Competence competence = new Competence();
-        competence.setName("Java");
-        competence.setDescription("Programmation OOP avec Java");
-        competence.setCertification(certification);
-        RHModel.create(competence);
+        // Competences
+        
+        Competence cmpJava = new Competence();
+        cmpJava.setName("Java");
+        cmpJava.setDescription("Programmation OOP avec Java");
+        cmpJava.setCertification(null);
+        RHModel.create(cmpJava);
     
+        Competence cmpJS = new Competence();
+        cmpJS.setName("Javascript");
+        cmpJS.setDescription("Programmation avec Javascript");
+        cmpJS.setCertification(certification);
+        RHModel.create(cmpJS);
+        
+        Competence cmpCpp = new Competence();
+        cmpCpp.setName("C++");
+        cmpCpp.setDescription("Programmation en C++ avec pointeurs");
+        cmpCpp.setCertification(certification);
+        RHModel.create(cmpCpp);
+        
+        // TEST DATA
+    
+        Candidat candidat = new Candidat();
+        candidat.setPrenom("Anthony");
+        candidat.setNom("Cote");
+        candidat.setDateNaissance("1986-11-24");
+        candidat.setEmail("coteanthony0@fakemail.com");
+        candidat.setNAS(BigInteger.valueOf(123456789));
+        candidat.setTelephone(BigInteger.valueOf(1892448451));
+        RHModel.create(candidat);
+        
+        candidat.earnCompetence(cmpJava, 3);
+        RHModel.update(candidat);
+        
+
         Emploi emploi = new Emploi();
         emploi.setTitre("Programmeur");
         emploi.setDescription("Tapper au hasard sur un clavier jusqu'a ce que ca compile");
-        emploi.setTypeEmploi(teService);
+        emploi.setTypeEmploi(teInformatique);
         RHModel.create(emploi);
+        
+        emploi.requiereCompetence(cmpJS, 1);
+        RHModel.update(emploi);
+        
     
         Entreprise entreprise = new Entreprise();
         entreprise.setName("CGI");
@@ -132,13 +153,20 @@ public class DBCreator {
         application.setOffreEmploi(offreEmploi);
         RHModel.create(application);
     
+        System.out.println("Database generation complete.");
 
+//        System.out.println("Start traveling test");
+//        emploi.getCompetenceRequireds()
+//                .stream()
+//                .map(CompetenceRequired::getCompetence)
+//                .map(Competence::getObj)
+//                .forEach(System.out::println);
+//
+//        for (CompetenceAcquired ca: candidat.getCompetenceAcquireds()) {
+//            System.out.println(ca);
+//        }
+    
 
+        System.out.println("Done.");
     }
-        
-        
-    
-    
-    
-    
 }

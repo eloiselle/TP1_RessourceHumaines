@@ -1,18 +1,18 @@
 package domain;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import utils.IdInterface;
+
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "etat_offre_emploi")
-public class EtatOffreEmploi {
+public class EtatOffreEmploi  implements IdInterface {
     
     @Id
     @Column(name = "id_etat_offre_emploi")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     public int getId()        { return id; }
     public void setId(int id) { this.id = id; }
@@ -25,7 +25,23 @@ public class EtatOffreEmploi {
     public String getDescription()                 { return description; }
     public void setDescription(String description) { this.description = description; }
     
-    public EtatOffreEmploi()                       { }
+    // ************************************************************************
+    
+    public EtatOffreEmploi() {}
+    
+    public EtatOffreEmploi(String name, String description) {
+        
+        this.name = name;
+        this.description = description;
+    }
+    public EtatOffreEmploi(int id, String name, String description) {
+        
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+    
+    // ************************************************************************
     
     @Override
     public boolean equals(Object o) {

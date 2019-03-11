@@ -1,23 +1,28 @@
 package domain;
 
+import utils.IdInterface;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "competence")
-public class Competence {
+public class Competence  implements IdInterface {
     
     @Id
     @Column(name = "id_competence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     public int getId()        { return id; }
     public void setId(int id) { this.id = id; }
     
-    @Column(name = "name") String name;
+    @Column(name = "name") private String name;
     public String getName()          { return name; }
     public void setName(String name) { this.name = name; }
     
-    @Column(name = "description") String description;
+    @Column(name = "description") private String description;
     public String getDescription()                 { return description; }
     public void setDescription(String description) { this.description = description; }
     
@@ -27,7 +32,20 @@ public class Competence {
     public Certification getCertification()                   { return certification; }
     public void setCertification(Certification certification) { this.certification = certification; }
     
-    public Competence()                                       { }
+//    @ManyToMany(mappedBy="competences")
+//    private Set <Candidat> candidats = new HashSet <>();
+//    public Set<Candidat> getCustomers() { return candidats; }
+//    public void setCandidats(Set <Candidat> candidats) { this.candidats = candidats; }
+    
+    // ************************************************************************
+    
+    public Competence() { }
+    
+    public Competence(String name, String description) {
+        
+        this.name = name;
+        this.description = description;
+    }
     
     public Competence(int id, String name, String description, Certification certification) {
         
@@ -37,16 +55,18 @@ public class Competence {
         this.certification = certification;
     }
     
+    // ************************************************************************
+    
     @Override
     public boolean equals(Object o) {
         
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Competence that = (Competence) o;
-        return id == that.id && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(certification, that.certification);
+        return id == that.id && Objects.equals(name, that.name);
     }
     @Override
-    public int hashCode() { return Objects.hash(id, name, description, certification); }
+    public int hashCode() { return Objects.hash(id, name, description); }
     
     @Override
     public String toString() {

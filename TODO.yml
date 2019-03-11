@@ -3,12 +3,11 @@ TODO:
     Modelisation:
         Faire le schema de fenetre # Anthony
         Choisir sur quoi on fait nos tests unitaires
-
+        Decider si on synchonise les objet avec la DB en temps reel ou sur demande
 
 
     Model: # Anthony
         Mettre a jour les proprietes des classes
-        Faire les relation ManyToMany
 
 
     Controller: # Zachary

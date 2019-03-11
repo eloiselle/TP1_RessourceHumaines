@@ -1,17 +1,17 @@
 package domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import utils.IdInterface;
+
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "entreprise")
-public class Entreprise {
+public class Entreprise implements IdInterface {
     
     @Id
     @Column(name = "id_entreprise")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     public int getId()        { return id; }
     public void setId(int id) { this.id = id; }
@@ -24,7 +24,15 @@ public class Entreprise {
     public String getDescription()                 { return description; }
     public void setDescription(String description) { this.description = description; }
     
+    // ************************************************************************
+    
     public Entreprise()                            { }
+    
+    public Entreprise(String name, String description) {
+        
+        this.name = name;
+        this.description = description;
+    }
     
     public Entreprise(int id, String name, String description) {
         
@@ -32,6 +40,8 @@ public class Entreprise {
         this.name = name;
         this.description = description;
     }
+    
+    // ************************************************************************
     
     @Override
     public boolean equals(Object o) {

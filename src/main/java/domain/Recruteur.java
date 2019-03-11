@@ -1,16 +1,18 @@
 package domain;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import utils.IdInterface;
+
+import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.Objects;
 
-public class Recruteur {
+@Entity
+@Table(name = "recruteur")
+public class Recruteur implements IdInterface {
     
     @Id
     @Column(name = "id_recruteur")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     public int getId()        { return id; }
     public void setId(int id) { this.id = id; }
@@ -46,9 +48,18 @@ public class Recruteur {
     public Entreprise getcertification()             { return entreprise; }
     public void setEntreprise(Entreprise entreprise) { this.entreprise = entreprise; }
     
+    // ************************************************************************
+    
     public Recruteur()                               { }
     
-    public Recruteur(int id, String nom, String prenom, BigInteger telephone, String email, float commission, BigInteger nas, Entreprise entreprise) {
+    public Recruteur(String nom, String prenom) {
+        
+        this.nom = nom;
+        this.prenom = prenom;
+    }
+    
+    public Recruteur(int id, String nom, String prenom, BigInteger telephone, String email, float commission,
+                     BigInteger nas, Entreprise entreprise) {
         
         this.id = id;
         this.nom = nom;
@@ -59,6 +70,8 @@ public class Recruteur {
         this.nas = nas;
         this.entreprise = entreprise;
     }
+    
+    // ************************************************************************
     
     @Override
     public boolean equals(Object o) {
