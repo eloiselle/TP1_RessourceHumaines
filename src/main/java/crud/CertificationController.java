@@ -1,9 +1,7 @@
 package crud;
 
 import domain.Certification;
-import model.DBCreator;
 import model.RHModel;
-import utils.IdInterface;
 
 import javax.swing.*;
 
@@ -26,7 +24,7 @@ public class CertificationController implements CRUDController {
     }
     
     @Override
-    public Certification getObj() { return (Certification) certification; }
+    public Certification getObj() { return certification; }
     
     @Override
     public String idToString() { return Integer.toString(certification.getId());}

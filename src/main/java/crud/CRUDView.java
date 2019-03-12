@@ -8,38 +8,37 @@ import java.awt.*;
 
 public abstract class CRUDView {
     
-    protected              CRUDController ctrl = null;
-    protected static final int            MIN_WIDTH  = 400;
-    protected static final int            MIN_HEIGHT = 100;
-    protected              JFrame         f;
-    protected              JLabel         lID = new JLabel();
+    private              CRUDController ctrl       = null;
+    private static final int            MIN_WIDTH  = 400;
+    private static final int            MIN_HEIGHT = 100;
+    private              JFrame         f;
     
-    protected JPanel buttonPanel;
-    protected JPanel dataPanel;
-    protected JPanel statusPanel;
-    protected JLabel statusLabel;
+    JLabel lID = new JLabel();
+    JPanel dataPanel;
+    private JPanel buttonPanel;
+    private JPanel statusPanel;
+    private JLabel statusLabel;
     
-    protected JButton bRefresh;
-    protected JButton bSave;
-    protected JButton bDelete;
-    protected JButton bNew;
-    protected JButton bLoad;
+    private JButton bRefresh;
+    private JButton bSave;
+    private JButton bDelete;
+    private JButton bNew;
+    private JButton bLoad;
     
     
     // ************************************************************************
     
     
-    public CRUDController getController() {                return ctrl;    }
-    public void setController(CRUDController ctrl) { this.ctrl = ctrl; }
-    /** Main */
+    void setController(CRUDController ctrl) { this.ctrl = ctrl; }
     
-    public void run() {
+    /** Main */
+    void run() {
         
         initFrame();
         changeStatusBar("Init");
     }
     
-    public void initFrame() {
+    private void initFrame() {
         
         f = new JFrame(getWindowTitle());
         initFrameElements();
@@ -47,7 +46,7 @@ public abstract class CRUDView {
         refresh();
     }
     
-    public void initFrameProperties() {
+    private void initFrameProperties() {
         
         JFrame.setDefaultLookAndFeelDecorated(true);
         
@@ -59,7 +58,7 @@ public abstract class CRUDView {
     }
     
     
-    public void initFrameElements() {
+    private void initFrameElements() {
         
         initLabels();
         initButtons();
@@ -77,7 +76,7 @@ public abstract class CRUDView {
     
     public abstract void initFields();
     
-    public void initButtons() {
+    private void initButtons() {
         
         bLoad = new JButton("Load");
         bLoad.addActionListener(e -> handleLoadButtonClicked());
@@ -96,7 +95,7 @@ public abstract class CRUDView {
         
     }
     
-    public void initStatusBar() {
+    private void initStatusBar() {
         
         statusPanel = new JPanel();
         statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
@@ -109,10 +108,9 @@ public abstract class CRUDView {
         
     }
     
-    public void initButtonPanel() {
+    private void initButtonPanel() {
         
         buttonPanel = new JPanel(new GridBagLayout());
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS)); // Vertical
         buttonPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         
         buttonPanel.add(bNew);
@@ -124,9 +122,9 @@ public abstract class CRUDView {
     
     public abstract void initDataPanel();
     
-    public void initLayout() {
+    private void initLayout() {
         
-        f.add(buttonPanel, BorderLayout.WEST);
+        f.add(buttonPanel, BorderLayout.NORTH);
         f.add(dataPanel, BorderLayout.CENTER);
         f.add(statusPanel, BorderLayout.SOUTH);
         
@@ -135,16 +133,16 @@ public abstract class CRUDView {
     // ************************************************************************
     
     // Handlers
-    public void handleFieldChanged() { ctrl.modify(); }
-    public void handleRefreshButtonClicked() { refresh(); }
-    public void handleLoadButtonClicked()    { ctrl.load();}
-    public void handleDeleteButtonClicked()  { ctrl.delete();}
-    public void handleSaveButtonClicked()    { ctrl.save();}
-    public void handleNewButtonClicked()     { ctrl.createNew();}
+    private void handleFieldChanged() { ctrl.modify(); }
+    private void handleRefreshButtonClicked() { refresh(); }
+    private void handleLoadButtonClicked()    { ctrl.load();}
+    private void handleDeleteButtonClicked()  { ctrl.delete();}
+    private void handleSaveButtonClicked()    { ctrl.save();}
+    private void handleNewButtonClicked()     { ctrl.createNew();}
     
     
-    public void refresh() {
-
+    void refresh() {
+        
         // Handle saved/unsaved data
         if (ctrl.isObjectExistInDB()) {
             lID.setText("ID : Unsaved");
@@ -153,7 +151,7 @@ public abstract class CRUDView {
             lID.setText("ID : " + ctrl.idToString());
             bDelete.setEnabled(true);
         }
-    
+        
         refreshInputField();
         changeStatusBar("Refresh");
         System.out.println(ctrl.getObj());
@@ -164,10 +162,10 @@ public abstract class CRUDView {
     // ************************************************************************
     
     
-    public void changeStatusBar(String status) { statusLabel.setText(status);}
+    void changeStatusBar(String status) { statusLabel.setText(status);}
     
     /** Macro pour savoir quand un champ est changer */
-    public DocumentListener defaultFieldListener() {
+    DocumentListener defaultFieldListener() {
         
         return new DocumentListener() {
             

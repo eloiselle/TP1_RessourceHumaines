@@ -1,9 +1,6 @@
 package crud;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 public class CertificationView extends CRUDView {
@@ -18,18 +15,9 @@ public class CertificationView extends CRUDView {
     private JTextArea  taDesc;
     
     
-    private JButton bRefresh;
-    private JButton bSave;
-    private JButton bDelete;
-    private JButton bNew;
-    private JButton bLoad;
-    
     // INIT *******************************************************************
     
-    public CertificationView(CertificationController cc) {
-        
-        this.ctrl = cc;
-    }
+    CertificationView(CertificationController controller) { this.ctrl = controller; }
     
     
     @Override
@@ -79,8 +67,8 @@ public class CertificationView extends CRUDView {
     
     // OBJECT PROPERTIES ******************************************************
     
-    public String getNom()  { return tfNom.getText();}
-    public String getDesc() { return taDesc.getText();}
+    String getNom()  { return tfNom.getText();}
+    String getDesc() { return taDesc.getText();}
     
     
 }

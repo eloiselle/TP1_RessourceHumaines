@@ -4,7 +4,6 @@ import model.DBCreator;
 import model.RHModel;
 import utils.IdInterface;
 
-import javax.swing.*;
 
 public interface CRUDController {
     
@@ -18,7 +17,7 @@ public interface CRUDController {
     
     IdInterface getObj();
     
-    public String idToString();
+    String idToString();
     boolean isObjectExistInDB();
     
     default void loadDatabase() throws ClassNotFoundException {
