@@ -1,7 +1,6 @@
 package launcher;
 
 import crud.CertificationController;
-import crud.CompetenceController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,7 +49,7 @@ public class MetaManager {
         bCertificat.addActionListener(e -> handleCertificatButtonClicked());
         
         JButton bCompetence = new JButton("Competence");
-        bCompetence.addActionListener(e -> handleCompetenceButtonClicked());
+        bCompetence.addActionListener(e -> handleButtonClicked());
         
         JButton bCandidat = new JButton("Candidat");
         bCandidat.addActionListener(e -> handleButtonClicked());
@@ -96,10 +95,4 @@ public class MetaManager {
         } catch (ClassNotFoundException e) { e.printStackTrace(); }
     }
     
-    private static void handleCompetenceButtonClicked() {
-        
-        try {
-            new CompetenceController().run();
-        } catch (ClassNotFoundException e) { e.printStackTrace(); }
-    }
 }
