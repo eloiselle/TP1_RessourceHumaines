@@ -134,7 +134,7 @@ public abstract class CRUDView {
     
     // Handlers
     private void handleFieldChanged() { ctrl.modify(); }
-    private void handleRefreshButtonClicked() { refresh(); }
+    private void handleRefreshButtonClicked() { refresh(); changeStatusBar("Refresh");}
     private void handleLoadButtonClicked()    { ctrl.load();}
     private void handleDeleteButtonClicked()  { ctrl.delete();}
     private void handleSaveButtonClicked()    { ctrl.save();}
@@ -144,7 +144,7 @@ public abstract class CRUDView {
     void refresh() {
         
         // Handle saved/unsaved data
-        if (ctrl.isObjectExistInDB()) {
+        if (ctrl.objectDoesNotExistInDB()) {
             lID.setText("ID : Unsaved");
             bDelete.setEnabled(false);
         } else {
@@ -153,7 +153,6 @@ public abstract class CRUDView {
         }
         
         refreshInputField();
-        changeStatusBar("Refresh");
         System.out.println(ctrl.getObj());
     }
     

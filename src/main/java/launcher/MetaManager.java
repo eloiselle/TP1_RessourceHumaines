@@ -1,5 +1,8 @@
 package launcher;
 
+import crud.CertificationController;
+import crud.CompetenceController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,23 +13,23 @@ public class MetaManager {
     private static final int    MIN_WIDTH    = 400;
     private static final int    MIN_HEIGHT   = 100;
     private static final String DEFAULT_TEXT = "Choose one option in the menu";
-    private              JFrame f;
-    private              JLabel label;
-    private              int    count;
+    private static       JFrame f;
+    private static       JLabel label;
+    private static       int    count;
     
     /** Main */
-    public static void main(String[] arguments) { new MetaManager().run();}
+    public static void main(String[] arguments) { MetaManager.run();}
     
-    public void run()                           { initFrame();}
+    private static void run() { initFrame();}
     
-    public void initFrame() {
+    private static void initFrame() {
         
         f = new JFrame(TITLE);
         initFrameElements();
         initFrameProperties();
     }
     
-    public void initFrameProperties() {
+    private static void initFrameProperties() {
         
         JFrame.setDefaultLookAndFeelDecorated(true);
         
@@ -37,20 +40,23 @@ public class MetaManager {
         f.setVisible(true);
     }
     
-    public void initFrameElements() {
+    private static void initFrameElements() {
         
         // Label
         label = new JLabel(DEFAULT_TEXT);
         
         // Button
+        JButton bCertificat = new JButton("Certification");
+        bCertificat.addActionListener(e -> handleCertificatButtonClicked());
+        
+        JButton bCompetence = new JButton("Competence");
+        bCompetence.addActionListener(e -> handleCompetenceButtonClicked());
+        
         JButton bCandidat = new JButton("Candidat");
         bCandidat.addActionListener(e -> handleButtonClicked());
         
         JButton bEmploi = new JButton("Emploi");
         bEmploi.addActionListener(e -> handleButtonClicked());
-        
-        JButton bCompetence = new JButton("Competence");
-        bCompetence.addActionListener(e -> handleButtonClicked());
         
         JButton bApplication = new JButton("Application");
         bApplication.addActionListener(e -> handleButtonClicked());
@@ -58,6 +64,7 @@ public class MetaManager {
         
         // Panel
         JPanel leftPanel = new JPanel(new GridBagLayout());
+        leftPanel.add(bCertificat);
         leftPanel.add(bCandidat);
         leftPanel.add(bEmploi);
         leftPanel.add(bCompetence);
@@ -75,11 +82,24 @@ public class MetaManager {
         
     }
     
-    public void handleButtonClicked() {
+    private static void handleButtonClicked() {
         
         count++;
         label.setText("Clicked " + count + " times");
         System.out.println("Have fun!");
     }
     
+    private static void handleCertificatButtonClicked() {
+        
+        try {
+            new CertificationController().run();
+        } catch (ClassNotFoundException e) { e.printStackTrace(); }
+    }
+    
+    private static void handleCompetenceButtonClicked() {
+        
+        try {
+            new CompetenceController().run();
+        } catch (ClassNotFoundException e) { e.printStackTrace(); }
+    }
 }
