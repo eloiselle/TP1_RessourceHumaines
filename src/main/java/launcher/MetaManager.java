@@ -1,7 +1,6 @@
 package launcher;
 
 import crud.CertificationController;
-import crud.CompetenceController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -96,10 +95,4 @@ public class MetaManager {
         } catch (ClassNotFoundException e) { e.printStackTrace(); }
     }
     
-    private static void handleCompetenceButtonClicked() {
-        
-        try {
-            new CompetenceController().run();
-        } catch (ClassNotFoundException e) { e.printStackTrace(); }
-    }
 }
