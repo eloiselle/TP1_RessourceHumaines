@@ -3,21 +3,23 @@ package crud;
 import javax.swing.*;
 import java.awt.*;
 
-public class CertificationView extends CRUDView {
+public class CompetenceView extends CRUDView {
     
-    private              CertificationController ctrl;
-    private static final String                  TITLE = "Head Hunter - Certification";
+    private              CompetenceController ctrl;
+    private static final String               TITLE = "Head Hunter - Competence";
     
     private JLabel lNom;
     private JLabel lDesc;
+    private JLabel lCertification;
     
     private JTextField tfNom;
     private JTextArea  taDesc;
+    private JTextField tfCertification;
     
     
     // INIT *******************************************************************
     
-    CertificationView(CertificationController controller) { this.ctrl = controller; }
+    CompetenceView(CompetenceController controller) { this.ctrl = controller; }
     
     
     @Override
@@ -26,6 +28,7 @@ public class CertificationView extends CRUDView {
         lID = new JLabel("ID : <default>");
         lNom = new JLabel("Nom : ");
         lDesc = new JLabel("Description : ");
+        lCertification = new JLabel("Certification ID : ");
     }
     
     @Override
@@ -37,6 +40,9 @@ public class CertificationView extends CRUDView {
         taDesc = new JTextArea();
         taDesc.setRows(5);
         taDesc.getDocument().addDocumentListener(defaultFieldListener());
+        
+        tfCertification = new JTextField();
+        tfCertification.getDocument().addDocumentListener(defaultFieldListener());
     }
     
     @Override
@@ -50,6 +56,8 @@ public class CertificationView extends CRUDView {
         dataPanel.add(tfNom);
         dataPanel.add(lDesc);
         dataPanel.add(taDesc);
+        dataPanel.add(lCertification);
+        dataPanel.add(tfCertification);
     }
     
     @Override
@@ -62,13 +70,14 @@ public class CertificationView extends CRUDView {
     
         tfNom.setText(ctrl.getObj().getName());
         taDesc.setText(ctrl.getObj().getDescription());
-        
+        tfCertification.setText(Integer.toString(ctrl.getObj().getCertification().getId()));
     }
     
     // OBJECT PROPERTIES ******************************************************
     
     String getNom()  { return tfNom.getText();}
     String getDesc() { return taDesc.getText();}
+    int getCertificationID() { return Integer.parseInt(tfCertification.getText());}
     
     
 }

@@ -102,4 +102,14 @@ public class RHModel extends PersistenceManager {
         return commit(em);
     }
     
+        /** Essaye de supprimer un objet dans la DB */
+    public static boolean delete(Competence obj) {
+        
+        EntityManager em = emFactory.createEntityManager();
+        em.getTransaction().begin();
+        obj = em.find(Competence.class, ((Competence) obj).getId());
+        em.remove(obj);
+        
+        return commit(em);
+    }
 }

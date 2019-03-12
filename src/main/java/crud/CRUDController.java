@@ -4,7 +4,6 @@ import model.DBCreator;
 import model.RHModel;
 import utils.IdInterface;
 
-import javax.swing.*;
 
 public interface CRUDController {
     
@@ -17,9 +16,11 @@ public interface CRUDController {
     void delete();
     
     IdInterface getObj();
+    CRUDView getView();
     
-    public String idToString();
-    boolean isObjectExistInDB();
+    String idToString();
+    default boolean objectExistInDB() { return getObj().getId() != 0;}
+    default boolean objectDoesNotExistInDB() { return getObj().getId() == 0;}
     
     default void loadDatabase() throws ClassNotFoundException {
         
@@ -27,5 +28,7 @@ public interface CRUDController {
         DBCreator.generateData();
         
     }
+    
+    
 
 }
