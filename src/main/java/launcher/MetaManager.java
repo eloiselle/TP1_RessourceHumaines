@@ -1,6 +1,8 @@
 package launcher;
 
 import crud.CertificationController;
+import model.DBCreator;
+import model.RHModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,9 +19,14 @@ public class MetaManager {
     private static       int    count;
     
     /** Main */
-    public static void main(String[] arguments) { MetaManager.run();}
+    public static void main(String[] arguments) throws ClassNotFoundException{ MetaManager.run();}
     
-    private static void run() { initFrame();}
+    private static void run() throws ClassNotFoundException{
+    
+        RHModel.init();
+        DBCreator.generateData();
+        initFrame();
+    }
     
     private static void initFrame() {
         

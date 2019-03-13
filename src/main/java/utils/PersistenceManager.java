@@ -16,7 +16,7 @@ public class PersistenceManager {
     private static final String               DRIVER                = "com.mysql.cj.jdbc.Driver";
     private static final String               PERSISTENCE_UNIT_NAME = "org.hibernate.tutorial.jpa";
     protected static     EntityManagerFactory emFactory;
-    
+    private static boolean isOpen = false;
     
     /**
      Execute a select query and return a List d'Object
@@ -41,6 +41,9 @@ public class PersistenceManager {
     /** Initialise */
     public static void init() throws ClassNotFoundException {
         
+        if (isOpen) return; // Don't reopen
+        
+        isOpen = true;
         Class.forName(DRIVER);
         emFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         System.out.println("Persistence initialization is complete.");
