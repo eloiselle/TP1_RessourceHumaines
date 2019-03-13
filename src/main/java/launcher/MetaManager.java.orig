@@ -2,8 +2,11 @@ package launcher;
 
 import crud.CertificationController;
 import crud.CompetenceController;
+<<<<<<< HEAD
 import model.DBCreator;
 import model.RHModel;
+=======
+>>>>>>> emile
 
 import javax.swing.*;
 import java.awt.*;
@@ -131,4 +134,8 @@ public class MetaManager {
             new CompetenceController().run();
         } catch (ClassNotFoundException e) { e.printStackTrace(); }
     }
+<<<<<<< HEAD
+    
+=======
+>>>>>>> emile
 }
