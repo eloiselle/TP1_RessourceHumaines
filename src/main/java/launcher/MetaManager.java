@@ -1,11 +1,13 @@
 package launcher;
 
 import crud.CertificationController;
+import crud.CompetenceController;
 import model.DBCreator;
 import model.RHModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 
 public class MetaManager {
@@ -18,14 +20,24 @@ public class MetaManager {
     private static       JLabel label;
     private static       int    count;
     
+    private static JPanel leftPanel;
+    private static JPanel rightPanel;
+    
+    private static JButton bCertificat;
+    private static JButton bCompetence;
+    private static JButton bCandidat;
+    private static JButton bEmploi;
+    private static JButton bApplication;
+    
     /** Main */
     public static void main(String[] arguments) throws ClassNotFoundException{ MetaManager.run();}
     
     private static void run() throws ClassNotFoundException{
     
+        initFrame();
         RHModel.init();
         DBCreator.generateData();
-        initFrame();
+        enableButtons();
     }
     
     private static void initFrame() {
@@ -51,36 +63,30 @@ public class MetaManager {
         // Label
         label = new JLabel(DEFAULT_TEXT);
         
-        // Button
-        JButton bCertificat = new JButton("Certification");
-        bCertificat.addActionListener(e -> handleCertificatButtonClicked());
-        
-        JButton bCompetence = new JButton("Competence");
-        bCompetence.addActionListener(e -> handleButtonClicked());
-        
-        JButton bCandidat = new JButton("Candidat");
-        bCandidat.addActionListener(e -> handleButtonClicked());
-        
-        JButton bEmploi = new JButton("Emploi");
-        bEmploi.addActionListener(e -> handleButtonClicked());
-        
-        JButton bApplication = new JButton("Application");
-        bApplication.addActionListener(e -> handleButtonClicked());
-        
-        
         // Panel
-        JPanel leftPanel = new JPanel(new GridBagLayout());
-        leftPanel.add(bCertificat);
-        leftPanel.add(bCandidat);
-        leftPanel.add(bEmploi);
-        leftPanel.add(bCompetence);
-        leftPanel.add(bApplication);
+        leftPanel = new JPanel(new GridBagLayout());
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS)); // Vertical
         leftPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         
-        JPanel rightPanel = new JPanel();
+        rightPanel = new JPanel();
         rightPanel.add(label);
         rightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        
+        // Button
+        bCertificat = newButton("Certification" );
+        bCertificat.addActionListener(e -> handleCertificatButtonClicked());
+        
+        bCompetence = newButton("Competence");
+        bCompetence.addActionListener(e -> handleCompetenceButtonClicked());
+        
+        bCandidat = newButton("Candidat      ");
+        bCandidat.addActionListener(e -> handleButtonClicked());
+        
+        bEmploi = newButton("Emploi          ");
+        bEmploi.addActionListener(e -> handleButtonClicked());
+        
+        bApplication = newButton("Application  ");
+        bApplication.addActionListener(e -> handleButtonClicked());
         
         // Layout
         f.getContentPane().add(leftPanel, BorderLayout.WEST);
@@ -88,17 +94,41 @@ public class MetaManager {
         
     }
     
+    private static JButton newButton(String text){
+        
+        JButton button = new JButton(text);
+        button.setEnabled(false);
+        leftPanel.add(button);
+        return button;
+    }
+    
+    private static void enableButtons(){
+        
+        bCertificat.setEnabled(true);
+        bCompetence.setEnabled(true);
+        //bCandidat.setEnabled(true);
+        //bEmploi.setEnabled(true);
+        //bApplication.setEnabled(true);
+    }
+    
     private static void handleButtonClicked() {
         
         count++;
         label.setText("Clicked " + count + " times");
-        System.out.println("Have fun!");
+        System.out.println("Not implemented");
     }
     
     private static void handleCertificatButtonClicked() {
         
         try {
             new CertificationController().run();
+        } catch (ClassNotFoundException e) { e.printStackTrace(); }
+    }
+    
+    private static void handleCompetenceButtonClicked() {
+        
+        try {
+            new CompetenceController().run();
         } catch (ClassNotFoundException e) { e.printStackTrace(); }
     }
     
