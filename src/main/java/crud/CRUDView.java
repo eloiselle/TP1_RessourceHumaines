@@ -35,20 +35,46 @@ public abstract class CRUDView {
     public abstract void refreshInputField();
     
     // Handlers
-    private void handleFieldChanged() { ctrl.modify(); }
+    private void handleFieldChanged() {
+        
+        ctrl.modify();
+        changeStatusBar("Modified");
+    }
+    private void handleLoadButtonClicked() {
+        
+        ctrl.load();
+        
+        if (ctrl.objectExistInDB()) {
+            changeStatusBar("Loaded");
+        } else {
+            changeStatusBar("ID not found");
+        }
+    }
+    private void handleDeleteButtonClicked() {
+        
+        if (ctrl.delete()) changeStatusBar("Deleted");
+        else changeStatusBar("Could not delete because it doesn't exist");
+    }
+    private void handleSaveButtonClicked() {
+        
+        ctrl.save();
+        changeStatusBar("Saved");
+    }
+    private void handleNewButtonClicked() {
+        
+        ctrl.createNew();
+        changeStatusBar("New");
+    }
     private void handleRefreshButtonClicked() {
-                                                  refresh();
-                                                  changeStatusBar("Refresh");
-                                              }
-    private void handleLoadButtonClicked()    { ctrl.load();}
-    private void handleDeleteButtonClicked()  { ctrl.delete();}
-    private void handleSaveButtonClicked()    { ctrl.save();}
-    private void handleNewButtonClicked()     { ctrl.createNew();}
+        
+        refresh();
+        changeStatusBar("Refresh");
+    }
     
     
-    void changeStatusBar(String status)       { statusLabel.setText(status);}
+    private void changeStatusBar(String status)     { statusLabel.setText(status);}
     
-    void setController(CRUDController ctrl)   { this.ctrl = ctrl; }
+    void setController(CRUDController ctrl) { this.ctrl = ctrl; }
     
     /** Main */
     void run() {
@@ -78,7 +104,7 @@ public abstract class CRUDView {
     
     
     private void initFrameElements() {
-    
+        
         initDataPanel();
         initButtonPanel();
         initButtons();
@@ -90,23 +116,23 @@ public abstract class CRUDView {
     
     
     private void initButtons() {
-    
+        
         bNew = new JButton("New");
         bNew.addActionListener(e -> handleNewButtonClicked());
         buttonPanel.add(bNew);
-    
+        
         bLoad = new JButton("Load");
         bLoad.addActionListener(e -> handleLoadButtonClicked());
         buttonPanel.add(bLoad);
-    
+        
         bSave = new JButton("Save");
         bSave.addActionListener(e -> handleSaveButtonClicked());
         buttonPanel.add(bSave);
-    
+        
         bDelete = new JButton("Delete");
         bDelete.addActionListener(e -> handleDeleteButtonClicked());
         buttonPanel.add(bDelete);
-    
+        
         bRefresh = new JButton("Refresh");
         bRefresh.addActionListener(e -> handleRefreshButtonClicked());
         buttonPanel.add(bRefresh);
@@ -129,7 +155,7 @@ public abstract class CRUDView {
         
         buttonPanel = new JPanel(new GridBagLayout());
         buttonPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
+        
     }
     
     private void initDataPanel() {

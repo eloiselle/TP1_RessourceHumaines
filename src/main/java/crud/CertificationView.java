@@ -1,7 +1,6 @@
 package crud;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class CertificationView extends CRUDView {
     
@@ -32,10 +31,12 @@ public class CertificationView extends CRUDView {
     
     @Override
     public void refreshInputField() {
-        
+    
+        System.out.println(ctrl.getObj());
         tfNom.setText(ctrl.getObj().getName());
+        System.out.println(ctrl.getObj());
         taDesc.setText(ctrl.getObj().getDescription());
-        
+
     }
     
     // OBJECT PROPERTIES ******************************************************

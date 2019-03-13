@@ -1,7 +1,6 @@
 package crud;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class CompetenceView extends CRUDView {
     

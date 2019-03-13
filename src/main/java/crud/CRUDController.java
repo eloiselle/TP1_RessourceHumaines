@@ -4,6 +4,8 @@ import model.DBCreator;
 import model.RHModel;
 import utils.IdInterface;
 
+import javax.swing.*;
+
 /**
  CRUDController est une interface de controller generique reutilisable pour different type de donnees */
 public interface CRUDController {
@@ -14,7 +16,7 @@ public interface CRUDController {
     void save();
     void load();
     void createNew();
-    void delete();
+    boolean delete();
     
     IdInterface getObj();
     CRUDView getView();
@@ -31,5 +33,6 @@ public interface CRUDController {
         
     }
     
+    default int inputId() { return Integer.parseInt(JOptionPane.showInputDialog("What id to load ?"));}
     
 }

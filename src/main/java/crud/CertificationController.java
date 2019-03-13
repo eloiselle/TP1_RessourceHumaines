@@ -3,8 +3,6 @@ package crud;
 import domain.Certification;
 import model.RHModel;
 
-import javax.swing.*;
-
 public class CertificationController implements CRUDController {
     
     private Certification     certification = new Certification();
@@ -36,8 +34,6 @@ public class CertificationController implements CRUDController {
         
         getObj().setName(view.getNom());
         getObj().setDescription(view.getDesc());
-        
-        view.changeStatusBar("Modified");
     }
     
     public void save() {
@@ -46,38 +42,29 @@ public class CertificationController implements CRUDController {
         else RHModel.update(certification);
         
         view.refresh();
-        view.changeStatusBar("Saved");
     }
     
     public void load() {
         
-        int id = Integer.parseInt(JOptionPane.showInputDialog("What id to load ?"));
-        certification = RHModel.loadCertification(id);
-        
+        certification = RHModel.loadCertification(inputId());
         view.refresh();
         
-        if (objectExistInDB()) {
-            view.changeStatusBar("Loaded");
-        } else {
-            view.changeStatusBar("ID not found");
-        }
     }
     
     public void createNew() {
         
         certification = new Certification();
         view.refresh();
-        view.changeStatusBar("New");
     }
     
-    public void delete() {
+    public boolean delete() {
         
         if (objectExistInDB()) {
             
             RHModel.delete(getObj());
             createNew();
-            view.changeStatusBar("Deleted");
+            return true;
             
-        } else view.changeStatusBar("Could not delete because it doesn't exist");
+        } else return false;
     }
 }
