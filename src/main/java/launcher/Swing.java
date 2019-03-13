@@ -11,16 +11,16 @@ public class Swing {
 	public static void main(String[] arguments) throws IOException {
 
 		//Data variables
-		String[] columnNames = { "Emploi ", "Personne contact ", "Téléphone ", "Email", "Date fin", "Nombre postes" };
+		String[] columnNames = { "Emploi ", "Personne contact ", "Telephone ", "Email", "Date fin", "Nombre postes" };
 
 		Object[][] data = { { "Data1" }, { "Data2" }, { "Data3" }, { "Data4" }, { "Data5" }, { "Data6" } };
 
 		//Swing elements
-		JTable table = new JTable(data, columnNames);
+		//JTable table = new JTable(data, columnNames);
 		JLabel lblOffreEmploi = new JLabel("Offre d'emploi");
 		JLabel lblCandidat = new JLabel("Candidat");
 		JLabel lblTitreEmploi = new JLabel("titreEmploi");
-		JLabel lblNomPrenom = new JLabel("Nom, Prénom");
+		JLabel lblNomPrenom = new JLabel("Nom, Prenom");
 
 		//Custom colors
 		Color cBlack = new Color(40, 40, 40);
@@ -39,7 +39,7 @@ public class Swing {
 		f.getContentPane().add(lblCandidat, "cell 6 2, center");
 		f.getContentPane().add(lblTitreEmploi, "cell 2 3, center");
 		f.getContentPane().add(lblNomPrenom, "cell 6 3, center");
-		f.getContentPane().add(table, "cell 1 3 3 3");
+		//f.getContentPane().add(table, "cell 1 3 3 3");
 
 		//Setup of elements
 		lblOffreEmploi.setForeground(Color.WHITE);

@@ -49,7 +49,7 @@ public class MetaManager {
         bCertificat.addActionListener(e -> handleCertificatButtonClicked());
         
         JButton bCompetence = new JButton("Competence");
-        bCompetence.addActionListener(e -> handleCompetenceButtonClicked());
+        bCompetence.addActionListener(e -> handleButtonClicked());
         
         JButton bCandidat = new JButton("Candidat");
         bCandidat.addActionListener(e -> handleButtonClicked());
