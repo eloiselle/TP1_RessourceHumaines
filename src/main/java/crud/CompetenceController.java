@@ -7,8 +7,8 @@ import javax.swing.*;
 
 public class CompetenceController implements CRUDController {
     
-    private              Competence     competence = new Competence();
-    private              CompetenceView view;
+    private Competence     competence = new Competence();
+    private CompetenceView view;
     
     public static void main(String[] args) throws ClassNotFoundException { new CompetenceController().run(); }
     
@@ -16,9 +16,7 @@ public class CompetenceController implements CRUDController {
         
         loadDatabase();
         view = new CompetenceView(this);
-        
         view.setController(this);
-        
         view.run();
     }
     
@@ -31,7 +29,6 @@ public class CompetenceController implements CRUDController {
     @Override
     public String idToString() { return Integer.toString(competence.getId());}
     
-
     
     // CRUD OPERATIONS ********************************************************
     
@@ -80,8 +77,7 @@ public class CompetenceController implements CRUDController {
             RHModel.delete(getObj());
             createNew();
             view.changeStatusBar("Deleted");
-        } else
-            view.changeStatusBar("Could not delete because it doesn't exist");
-
+        } else view.changeStatusBar("Could not delete because it doesn't exist");
+        
     }
 }

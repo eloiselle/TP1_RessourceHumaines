@@ -16,9 +16,7 @@ public class CertificationController implements CRUDController {
         
         loadDatabase();
         view = new CertificationView(this);
-        
         view.setController(this);
-        
         view.run();
     }
     
@@ -55,7 +53,7 @@ public class CertificationController implements CRUDController {
         
         int id = Integer.parseInt(JOptionPane.showInputDialog("What id to load ?"));
         certification = RHModel.loadCertification(id);
-    
+        
         view.refresh();
         
         if (objectExistInDB()) {
@@ -73,14 +71,13 @@ public class CertificationController implements CRUDController {
     }
     
     public void delete() {
-
+        
         if (objectExistInDB()) {
             
             RHModel.delete(getObj());
             createNew();
             view.changeStatusBar("Deleted");
             
-        } else
-            view.changeStatusBar("Could not delete because it doesn't exist");
+        } else view.changeStatusBar("Could not delete because it doesn't exist");
     }
 }
