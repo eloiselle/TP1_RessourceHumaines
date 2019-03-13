@@ -78,10 +78,10 @@ public abstract class CRUDView {
     
     
     private void initFrameElements() {
-        
-        initButtons();
-        initButtonPanel();
+    
         initDataPanel();
+        initButtonPanel();
+        initButtons();
         initElements();
         initStatusBar();
         
@@ -90,22 +90,26 @@ public abstract class CRUDView {
     
     
     private void initButtons() {
-        
-        bLoad = new JButton("Load");
-        bLoad.addActionListener(e -> handleLoadButtonClicked());
-        
-        bRefresh = new JButton("Refresh");
-        bRefresh.addActionListener(e -> handleRefreshButtonClicked());
-        
-        bSave = new JButton("Save");
-        bSave.addActionListener(e -> handleSaveButtonClicked());
-        
-        bDelete = new JButton("Delete");
-        bDelete.addActionListener(e -> handleDeleteButtonClicked());
-        
+    
         bNew = new JButton("New");
         bNew.addActionListener(e -> handleNewButtonClicked());
-        
+        buttonPanel.add(bNew);
+    
+        bLoad = new JButton("Load");
+        bLoad.addActionListener(e -> handleLoadButtonClicked());
+        buttonPanel.add(bLoad);
+    
+        bSave = new JButton("Save");
+        bSave.addActionListener(e -> handleSaveButtonClicked());
+        buttonPanel.add(bSave);
+    
+        bDelete = new JButton("Delete");
+        bDelete.addActionListener(e -> handleDeleteButtonClicked());
+        buttonPanel.add(bDelete);
+    
+        bRefresh = new JButton("Refresh");
+        bRefresh.addActionListener(e -> handleRefreshButtonClicked());
+        buttonPanel.add(bRefresh);
     }
     
     private void initStatusBar() {
@@ -125,18 +129,14 @@ public abstract class CRUDView {
         
         buttonPanel = new JPanel(new GridBagLayout());
         buttonPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        
-        buttonPanel.add(bNew);
-        buttonPanel.add(bLoad);
-        buttonPanel.add(bSave);
-        buttonPanel.add(bDelete);
-        buttonPanel.add(bRefresh);
+
     }
     
     private void initDataPanel() {
         
-        dataPanel = new JPanel();
+        dataPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS)); // Vertical
+        
         dataPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         
     }
@@ -172,6 +172,7 @@ public abstract class CRUDView {
     JLabel newLabel(String text) {
         
         JLabel label = new JLabel(text);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
         dataPanel.add(label);
         return label;
     }
@@ -180,6 +181,7 @@ public abstract class CRUDView {
         
         newLabel(label);
         JTextField textField = new JTextField();
+        textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         textField.getDocument().addDocumentListener(defaultFieldListener());
         dataPanel.add(textField);
         return textField;
@@ -189,6 +191,7 @@ public abstract class CRUDView {
         
         newLabel(label);
         JTextArea textArea = new JTextArea();
+        textArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         textArea.setRows(5);
         textArea.getDocument().addDocumentListener(defaultFieldListener());
         dataPanel.add(textArea);

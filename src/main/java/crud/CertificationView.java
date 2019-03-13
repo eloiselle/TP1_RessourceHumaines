@@ -21,8 +21,8 @@ public class CertificationView extends CRUDView {
     public void initElements() {
         
         lID = newLabel("ID : <default>");
-        tfNom = newTextField("Nom : ");
-        taDesc = newTextArea("Description : ");
+        tfNom = newTextField("Nom");
+        taDesc = newTextArea("Description");
     }
     
     

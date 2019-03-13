@@ -22,9 +22,9 @@ public class CompetenceView extends CRUDView {
     public void initElements() {
         
         lID = newLabel("ID : <default>");
-        tfNom = newTextField("Nom : ");
-        taDesc = newTextArea("Description : ");
-        tfCertification = newTextField("Certification ID : ");
+        tfNom = newTextField("Nom");
+        taDesc = newTextArea("Description");
+        tfCertification = newTextField("Certification ID");
     }
     
     @Override
