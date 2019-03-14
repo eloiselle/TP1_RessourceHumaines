@@ -4,11 +4,8 @@
 package launcher;
 
 import domain.*;
-import model.RHModel;
-
 import java.awt.Color;
 
-import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -17,9 +14,8 @@ import java.util.List;
 import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Swing.
+ * The Class to compare competences.
  */
 public class Swing {
 
@@ -29,52 +25,34 @@ public class Swing {
 	/** The frame. */
 	private JFrame f;
 
-	/** The panel data entreprise. */
+	/** The panels. */
 	private JPanel panelDataEntreprise;
-
-	/** The panel data candidat. */
 	private JPanel panelDataCandidat;
-
-	/** The panel competence entreprise. */
 	private JPanel panelCompetenceEntreprise;
-
-	/** The panel competence candidat. */
 	private JPanel panelCompetenceCandidat;
 
-	/** The custom color 1. */
+	/** Custom colors. */
 	private Color cBlack = new Color(40, 40, 40);
-
-	/** The custom color 2. */
 	private Color cGray = new Color(80, 80, 80);
-
-	/** The custom color 3. */
 	private Color cYellow = new Color(0, 40, 40);
 
-	/** The lbl entreprise header. */
 	private JLabel lblEntrepriseHeader[] = { new JLabel("Offre d'emploi"), new JLabel("Entreprise"),
 			new JLabel("Personne contact"), new JLabel("Telephone"), new JLabel("Courriel"), new JLabel("Date fin"),
 			new JLabel("Nombre postes") };
 
-	/** The lbl entreprise data. */
 	private List<JLabel> lblEntrepriseData = new ArrayList<>();
-
-	/** The lbl entreprise competence. */
 	private List<JLabel> lblEntrepriseCompetence = new ArrayList<>();
-
-	/** The lbl entreprise level. */
 	private List<JLabel> lblEntrepriseLevel = new ArrayList<>();
 
-	/** The lbl candidat header. */
-	private JLabel lblCandidatHeader[] = { new JLabel("Candidat"), new JLabel("Telephone"), new JLabel("Courriel"),
-			new JLabel("Date naissance"), new JLabel("NAS") };
+	private JLabel lblCandidatHeader[] = { 
+			new JLabel("Candidat"), 
+			new JLabel("Telephone"), 
+			new JLabel("Courriel"),
+			new JLabel("Date naissance"), 
+			new JLabel("NAS") };
 
-	/** The lbl candidat data. */
 	private List<JLabel> lblCandidatData = new ArrayList<>();
-
-	/** The lbl candidat competence. */
 	private List<JLabel> lblCandidatCompetence = new ArrayList<>();
-
-	/** The lbl candidat level. */
 	private List<JLabel> lblCandidatLevel = new ArrayList<>();
 
 	/**
@@ -83,7 +61,6 @@ public class Swing {
 	 * @param arguments the arguments
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	// Main
 	public static void main(String[] arguments) throws IOException {
 
 		Swing fenetre = new Swing();
@@ -93,7 +70,7 @@ public class Swing {
 	}
 
 	/**
-	 * Inits the main frame.
+	 * Init the main frame.
 	 */
 	public void init() {
 
@@ -256,12 +233,12 @@ public class Swing {
 		// ------------------------------------------//
 		
 		// Candidat labels
-		lblCandidatData.add(new JLabel(": " + candidat.getNom() + ", " + candidat.getPrenom()));
-		lblCandidatData.add(new JLabel(": " + String.valueOf(candidat.getTelephone())
+		lblCandidatData.add(new JLabel(candidat.getNom() + ", " + candidat.getPrenom()));
+		lblCandidatData.add(new JLabel(String.valueOf(candidat.getTelephone())
 				.replaceFirst("(\\d{1})(\\d{3})(\\d{3})(\\d+)", "$1+($2) $3-$4")));
-		lblCandidatData.add(new JLabel(": " + candidat.getEmail()));
-		lblCandidatData.add(new JLabel(": " + candidat.getDateNaissance()));
-		lblCandidatData.add(new JLabel(": " + candidat.getNAS()));
+		lblCandidatData.add(new JLabel(candidat.getEmail()));
+		lblCandidatData.add(new JLabel(candidat.getDateNaissance()));
+		lblCandidatData.add(new JLabel(candidat.getNAS().toString()));
 		
 		// Candidat competences + niveaux
 		for (CompetenceAcquired c : candidat.getCompetenceAcquireds()) {
@@ -289,15 +266,15 @@ public class Swing {
 		}
 
 		// Entreprise labels
-		lblEntrepriseData.add(new JLabel(": " + offreEmploi.getEmploi().getTitre()));
-		lblEntrepriseData.add(new JLabel(": " + offreEmploi.getRecruteurInterne().getEntreprise().getName()));
-		lblEntrepriseData.add(new JLabel(": " + offreEmploi.getRecruteurInterne().getNom() + ", "
+		lblEntrepriseData.add(new JLabel(offreEmploi.getEmploi().getTitre()));
+		lblEntrepriseData.add(new JLabel(offreEmploi.getRecruteurInterne().getEntreprise().getName()));
+		lblEntrepriseData.add(new JLabel(offreEmploi.getRecruteurInterne().getNom() + ", "
 				+ offreEmploi.getRecruteurInterne().getPrenom()));
-		lblEntrepriseData.add(new JLabel(": " + String.valueOf(offreEmploi.getRecruteurInterne().getTelephone())
+		lblEntrepriseData.add(new JLabel(String.valueOf(offreEmploi.getRecruteurInterne().getTelephone())
 				.replaceFirst("(\\d{1})(\\d{3})(\\d{3})(\\d+)", "$1+($2) $3-$4")));
-		lblEntrepriseData.add(new JLabel(": " + offreEmploi.getRecruteurInterne().getEmail()));
-		lblEntrepriseData.add(new JLabel(": " + offreEmploi.getDateFin()));
-		lblEntrepriseData.add(new JLabel(": " + offreEmploi.getNbrPostes()));
+		lblEntrepriseData.add(new JLabel(offreEmploi.getRecruteurInterne().getEmail()));
+		lblEntrepriseData.add(new JLabel(offreEmploi.getDateFin()));
+		lblEntrepriseData.add(new JLabel(String.valueOf(offreEmploi.getNbrPostes())));
 		
 		// Entreprise competences + niveaux
 		for (CompetenceRequired c : offreEmploi.getEmploi().getCompetenceRequireds()) {
