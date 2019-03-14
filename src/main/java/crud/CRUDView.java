@@ -88,7 +88,6 @@ public abstract class CRUDView {
         f = new JFrame(getWindowTitle());
         initFrameElements();
         initFrameProperties();
-        //refresh();
     }
     
     private void initFrameProperties() {
