@@ -99,17 +99,31 @@ public class DBCreator {
         
         // TEST DATA
     
-        Candidat candidat = new Candidat();
-        candidat.setPrenom("Anthony");
-        candidat.setNom("Cote");
-        candidat.setDateNaissance("1986-11-24");
-        candidat.setEmail("coteanthony0@fakemail.com");
-        candidat.setNAS(BigInteger.valueOf(123456789));
-        candidat.setTelephone(BigInteger.valueOf(1892448451));
-        RHModel.create(candidat);
+        Candidat candidatAnthony = new Candidat();
+        candidatAnthony.setPrenom("Anthony");
+        candidatAnthony.setNom("Cote");
+        candidatAnthony.setDateNaissance("1986-11-24");
+        candidatAnthony.setEmail("coteanthony0@fakemail.com");
+        candidatAnthony.setNAS(BigInteger.valueOf(123456789));
+        candidatAnthony.setTelephone(BigInteger.valueOf(1892448451));
+        RHModel.create(candidatAnthony);
         
-        candidat.earnCompetence(cmpJava, 3);
-        RHModel.update(candidat);
+        candidatAnthony.earnCompetence(cmpJava, 4);
+        RHModel.update(candidatAnthony);
+        candidatAnthony.earnCompetence(cmpCpp, 3);
+        RHModel.update(candidatAnthony);
+        
+        Candidat candidatBob = new Candidat();
+        candidatBob.setPrenom("Bob");
+        candidatBob.setNom("Roberts");
+        candidatBob.setDateNaissance("1956-04-13");
+        candidatBob.setEmail("bobob@fakemail.com");
+        candidatBob.setNAS(BigInteger.valueOf(123456789));
+        candidatBob.setTelephone(BigInteger.valueOf(1892448451));
+        RHModel.create(candidatBob);
+        
+        candidatBob.earnCompetence(cmpJS, 1);
+        RHModel.update(candidatBob);
         
 
         Emploi emploi = new Emploi();

@@ -8,7 +8,6 @@ import domain.*;
 import java.awt.Color;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,24 +22,24 @@ import net.miginfocom.swing.MigLayout;
 public class CompetenceComparator {
     
     /** The selected index. */
-    private int selectedEntrepriseIndex = 0;
-    private int selectedCandidatIndex   = 0;
+    private int selectedOffreEmploiIndex = 1;
+    private int selectedCandidatIndex    = 1;
     
-    private JLabel lblEntIndex = new JLabel();
-    private JLabel lblCanIndex = new JLabel();
+    private JLabel lblOffreEmploiIndex = new JLabel();
+    private JLabel lblCandidatIndex    = new JLabel();
     
     /** The frame. */
     private JFrame f;
     
     /** The panels. */
-    private JPanel panelDataEntreprise;
+    private JPanel panelDataOffreEmploi;
     private JPanel panelDataCandidat;
-    private JPanel panelCompetenceEntreprise;
+    private JPanel panelCompetenceOffreEmploi;
     private JPanel panelCompetenceCandidat;
     
     /** The menu bar elements. */
-    private JButton btnEntreprisePrev;
-    private JButton btnEntrepriseNext;
+    private JButton btnOffreEmploiPrev;
+    private JButton btnOffreEmploiNext;
     private JButton btnCandidatPrev;
     private JButton btnCandidatNext;
     
@@ -48,11 +47,11 @@ public class CompetenceComparator {
     private Color backgroundColor = new Color(40, 40, 40);
     
     /** Entreprise elements. */
-    private JLabel lblEntrepriseHeader[] = { new JLabel("Offre d'emploi"), new JLabel("Entreprise"), new JLabel("Personne contact"), new JLabel("Telephone"), new JLabel("Courriel"), new JLabel("Date fin"), new JLabel("Nombre postes") };
+    private JLabel lblOffreEmploiHeader[] = { new JLabel("Offre d'emploi"), new JLabel("Entreprise"), new JLabel("Personne contact"), new JLabel("Telephone"), new JLabel("Courriel"), new JLabel("Date fin"), new JLabel("Nombre postes") };
     
-    private List <JLabel> lblEntrepriseData       = new ArrayList <>();
-    private List <JLabel> lblEntrepriseCompetence = new ArrayList <>();
-    private List <JLabel> lblEntrepriseLevel      = new ArrayList <>();
+    private List <JLabel> lblOffreEmploiData       = new ArrayList <>();
+    private List <JLabel> lblOffreEmploiCompetence = new ArrayList <>();
+    private List <JLabel> lblOffreEmploiLevel      = new ArrayList <>();
     
     /** Candidat elements. */
     private JLabel lblCandidatHeader[] = { new JLabel("Candidat"), new JLabel("Telephone"), new JLabel("Courriel"), new JLabel("Date naissance"), new JLabel("NAS") };
@@ -62,28 +61,12 @@ public class CompetenceComparator {
     private List <JLabel> lblCandidatLevel      = new ArrayList <>();
     
     /** Data variables. */
-    private TypeEmploi teManuel;
-    private TypeEmploi teInformatique;
-    private TypeEmploi teService;
-    
-    private EtatOffreEmploi eoeRecherche;
-    private EtatOffreEmploi eoeHired;
-    private EtatOffreEmploi eoeNotFound;
-    private EtatOffreEmploi eoeWaiting;
-    private EtatOffreEmploi eoeProcessing;
-    
-    private Certification certification;
-    
-    private Competence cmpJava;
-    private Competence cmpJS;
-    private Competence cmpCpp;
     
     private Candidat    candidat;
     private Emploi      emploi;
     private Entreprise  entreprise;
     private Recruteur   recruteur;
     private OffreEmploi offreEmploi;
-    private Application application;
     
     /**
      The main method.
@@ -104,7 +87,7 @@ public class CompetenceComparator {
         loadDefaultData();
         
         init();
-        refresh();
+        refreshFrame();
     }
     
     /**
@@ -115,11 +98,11 @@ public class CompetenceComparator {
         initFramesAndPanels();
         initButtons();
         
-        //First refresh, add values in labels (without f.setVisible(true))
-        refreshEntreprise();
+        //First refreshFrame, add values in labels (without f.setVisible(true))
+        refreshOffreEmploi();
         refreshCandidat();
-        
-        initEntreprisePanels();
+
+        initOffreEmploiPanels();
         initCandidatPanels();
     }
     
@@ -134,60 +117,60 @@ public class CompetenceComparator {
         f.getContentPane().setBackground(backgroundColor);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        panelDataEntreprise = new JPanel(new MigLayout("", "[125!][200!]", ""));
+        panelDataOffreEmploi = new JPanel(new MigLayout("", "[125!][200!]", ""));
         panelDataCandidat = new JPanel(new MigLayout("", "[125!][200!]", ""));
-        panelCompetenceEntreprise = new JPanel(new MigLayout("", "[125!][125!]", ""));
+        panelCompetenceOffreEmploi = new JPanel(new MigLayout("", "[125!][125!]", ""));
         panelCompetenceCandidat = new JPanel(new MigLayout("", "[125!][125!]", ""));
         
-        panelDataEntreprise.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        panelDataOffreEmploi.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         panelDataCandidat.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         
-        panelDataEntreprise.setBackground(backgroundColor);
+        panelDataOffreEmploi.setBackground(backgroundColor);
         panelDataCandidat.setBackground(backgroundColor);
-        panelCompetenceEntreprise.setBackground(backgroundColor);
+        panelCompetenceOffreEmploi.setBackground(backgroundColor);
         panelCompetenceCandidat.setBackground(backgroundColor);
         
-        JScrollPane scrollPaneEntreprise = new JScrollPane(panelCompetenceEntreprise);
+        JScrollPane scrollPaneOffreEmploi = new JScrollPane(panelCompetenceOffreEmploi);
         JScrollPane scrollPaneCandidat   = new JScrollPane(panelCompetenceCandidat);
         
-        scrollPaneEntreprise.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPaneOffreEmploi.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPaneCandidat.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         
-        f.add(panelDataEntreprise, "cell 0 1 1 1, top, center");
+        f.add(panelDataOffreEmploi, "cell 0 1 1 1, top, center");
         f.add(panelDataCandidat, "cell 2 1 3 1, top, center");
-        f.add(scrollPaneEntreprise, "cell 0 2 2 2, top, center");
+        f.add(scrollPaneOffreEmploi, "cell 0 2 2 2, top, center");
         f.add(scrollPaneCandidat, "cell 2 2 4 2, top, center");
     }
     
     /**
      Init the entreprise panels.
      */
-    public void initEntreprisePanels() {
+    public void initOffreEmploiPanels() {
         // Affichage headers
-        for (int i = 0; i < lblEntrepriseHeader.length; i++) {
-            lblEntrepriseHeader[i].setForeground(Color.WHITE);
-            panelDataEntreprise.add(lblEntrepriseHeader[i], "cell 0 " + i);
+        for (int i = 0; i < lblOffreEmploiHeader.length; i++) {
+            lblOffreEmploiHeader[i].setForeground(Color.WHITE);
+            panelDataOffreEmploi.add(lblOffreEmploiHeader[i], "cell 0 " + i);
         }
         
         // Affichage labels
-        for (int i = 0; i < lblEntrepriseData.size(); i++) {
-            lblEntrepriseData.get(i).setForeground(Color.WHITE);
-            panelDataEntreprise.add(lblEntrepriseData.get(i), "cell 1 " + i);
+        for (int i = 0; i < lblOffreEmploiData.size(); i++) {
+            lblOffreEmploiData.get(i).setForeground(Color.WHITE);
+            panelDataOffreEmploi.add(lblOffreEmploiData.get(i), "cell 1 " + i);
         }
         
         // Affichage competence
-        for (int i = 0; i < lblEntrepriseCompetence.size(); i++) {
-            lblEntrepriseCompetence.get(i).setForeground(Color.WHITE);
-            panelCompetenceEntreprise.add(lblEntrepriseCompetence.get(i), "cell 0 " + i);
+        for (int i = 0; i < lblOffreEmploiCompetence.size(); i++) {
+            lblOffreEmploiCompetence.get(i).setForeground(Color.WHITE);
+            panelCompetenceOffreEmploi.add(lblOffreEmploiCompetence.get(i), "cell 0 " + i);
         }
         
         // Affichage niveau
-        for (int i = 0; i < lblEntrepriseLevel.size(); i++) {
-            lblEntrepriseLevel.get(i).setForeground(Color.WHITE);
-            panelCompetenceEntreprise.add(lblEntrepriseLevel.get(i), "cell 1 " + i + ", right");
+        for (int i = 0; i < lblOffreEmploiLevel.size(); i++) {
+            lblOffreEmploiLevel.get(i).setForeground(Color.WHITE);
+            panelCompetenceOffreEmploi.add(lblOffreEmploiLevel.get(i), "cell 1 " + i + ", right");
         }
         
-        lblEntIndex.setForeground(Color.WHITE);
+        lblOffreEmploiIndex.setForeground(Color.WHITE);
     }
     
     /**
@@ -218,7 +201,7 @@ public class CompetenceComparator {
             panelCompetenceCandidat.add(lblCandidatLevel.get(i), "cell 1 " + i + ", right");
         }
         
-        lblCanIndex.setForeground(Color.WHITE);
+        lblCandidatIndex.setForeground(Color.WHITE);
     }
     
     
@@ -227,15 +210,15 @@ public class CompetenceComparator {
      */
     public void initButtons() {
         
-        btnEntreprisePrev = new JButton("Prev");
-        btnEntreprisePrev.addActionListener(e -> handleBtnEntreprisePrevClicked());
-        f.add(btnEntreprisePrev, "cell 0 0, bottom, center, split 2");
+        btnOffreEmploiPrev = new JButton("Prev");
+        btnOffreEmploiPrev.addActionListener(e -> handleBtnOffreEmploiPrevClicked());
+        f.add(btnOffreEmploiPrev, "cell 0 0, bottom, center, split 2");
         
-        btnEntrepriseNext = new JButton("Next");
-        btnEntrepriseNext.addActionListener(e -> handleBtnEntrepriseNextClicked());
-        f.add(btnEntrepriseNext, "bottom, center");
+        btnOffreEmploiNext = new JButton("Next");
+        btnOffreEmploiNext.addActionListener(e -> handleBtnOffreEmploiNextClicked());
+        f.add(btnOffreEmploiNext, "bottom, center");
         
-        f.add(lblEntIndex, "bottom, center");
+        f.add(lblOffreEmploiIndex, "bottom, center");
         
         btnCandidatPrev = new JButton("Prev");
         btnCandidatPrev.addActionListener(e -> handleBtnCandidatPrevClicked());
@@ -245,16 +228,18 @@ public class CompetenceComparator {
         btnCandidatNext.addActionListener(e -> handleBtnCandidatNextClicked());
         f.add(btnCandidatNext, "bottom, center");
         
-        f.add(lblCanIndex, "bottom, center");
+        f.add(lblCandidatIndex, "bottom, center");
     }
+    
+    // REFRESH ****************************************************************
     
     /**
      Refresh the whole window and data.
      */
-    public void refresh() {
+    public void refreshFrame() {
         
         loadDefaultData();
-        refreshEntreprise();
+        refreshOffreEmploi();
         refreshCandidat();
         
         f.pack();
@@ -268,7 +253,6 @@ public class CompetenceComparator {
         entreprise = RHModel.loadEntreprise(1);
         recruteur = RHModel.loadRecruteur(1);
         offreEmploi = RHModel.loadOffreEmploi(1);
-        application = RHModel.loadApplication(1);
         
         offreEmploi.setEmploi(emploi);
         offreEmploi.setRecruteurInterne(recruteur);
@@ -278,32 +262,28 @@ public class CompetenceComparator {
     /**
      Refresh the entreprise panels.
      */
-    public void refreshEntreprise() {
+    public void refreshOffreEmploi() {
         
-        lblEntrepriseData.clear();
-        lblEntrepriseCompetence.clear();
+        lblOffreEmploiData.clear();
+        lblOffreEmploiCompetence.clear();
         
         // Refresh entreprise labels
-        lblEntrepriseData.add(new JLabel(offreEmploi.getEmploi().getTitre()));
-        
-        System.out.println(offreEmploi.getRecruteurInterne());
-        System.out.println(offreEmploi.getRecruteurInterne().getEntreprise());
-        
-        lblEntrepriseData.add(new JLabel(offreEmploi.getRecruteurInterne().getEntreprise().getName()));
-        lblEntrepriseData.add(new JLabel(offreEmploi.getRecruteurInterne().getNom() + ", " + offreEmploi.getRecruteurInterne().getPrenom()));
-        lblEntrepriseData.add(new JLabel(String.valueOf(offreEmploi.getRecruteurInterne().getTelephone()).replaceFirst("(\\d{1})(\\d{3})(\\d{3})(\\d+)", "$1+($2) $3-$4")));
-        lblEntrepriseData.add(new JLabel(offreEmploi.getRecruteurInterne().getEmail()));
-        lblEntrepriseData.add(new JLabel(offreEmploi.getDateFin()));
-        lblEntrepriseData.add(new JLabel(String.valueOf(offreEmploi.getNbrPostes())));
+        lblOffreEmploiData.add(new JLabel(offreEmploi.getEmploi().getTitre()));
+        lblOffreEmploiData.add(new JLabel(offreEmploi.getRecruteurInterne().getEntreprise().getName()));
+        lblOffreEmploiData.add(new JLabel(offreEmploi.getRecruteurInterne().getNom() + ", " + offreEmploi.getRecruteurInterne().getPrenom()));
+        lblOffreEmploiData.add(new JLabel(String.valueOf(offreEmploi.getRecruteurInterne().getTelephone()).replaceFirst("(\\d{1})(\\d{3})(\\d{3})(\\d+)", "$1+($2) $3-$4")));
+        lblOffreEmploiData.add(new JLabel(offreEmploi.getRecruteurInterne().getEmail()));
+        lblOffreEmploiData.add(new JLabel(offreEmploi.getDateFin()));
+        lblOffreEmploiData.add(new JLabel(String.valueOf(offreEmploi.getNbrPostes())));
         
         // Refresh entreprise competences + niveaux
         for (CompetenceRequired c : offreEmploi.getEmploi().getCompetenceRequireds()) {
-            lblEntrepriseCompetence.add(new JLabel(c.getCompetence().getName()));
-            lblEntrepriseLevel.add(new JLabel(String.valueOf(c.getLevel())));
+            lblOffreEmploiCompetence.add(new JLabel(c.getCompetence().getName()));
+            lblOffreEmploiLevel.add(new JLabel(String.valueOf(c.getLevel())));
         }
-        ;
         
-        lblEntIndex.setText("Index: " + String.valueOf(selectedEntrepriseIndex));
+        lblOffreEmploiIndex.setText("Index: " + String.valueOf(selectedOffreEmploiIndex));
+        System.out.println(offreEmploi);
     }
     
     /**
@@ -327,42 +307,45 @@ public class CompetenceComparator {
             lblCandidatLevel.add(new JLabel(String.valueOf(c.getLevel())));
         }
         
-        lblCanIndex.setText("Index: " + String.valueOf(selectedCandidatIndex));
+        lblCandidatIndex.setText("Index: " + String.valueOf(selectedCandidatIndex));
+        System.out.println(candidat);
     }
     
+    // HANDLE BUTTON **********************************************************
     
-    private void handleBtnEntreprisePrevClicked() {
+    private void handleBtnOffreEmploiPrevClicked() {
         
         do {
-            entreprise = RHModel.loadEntreprise(selectedEntrepriseIndex--);
-        } while (entreprise == null);
-        refresh();
+            offreEmploi= RHModel.loadOffreEmploi(--selectedOffreEmploiIndex);
+        } while (offreEmploi== null);
+        
+        refreshOffreEmploi();
     }
     
-    private void handleBtnEntrepriseNextClicked() {
+    private void handleBtnOffreEmploiNextClicked() {
         
         do {
-            entreprise = RHModel.loadEntreprise(selectedEntrepriseIndex++);
-        } while (entreprise == null);
+            offreEmploi= RHModel.loadOffreEmploi(++selectedOffreEmploiIndex);
+        } while (offreEmploi == null);
         
-        refresh();
+        refreshOffreEmploi();
     }
     
     private void handleBtnCandidatPrevClicked() {
         
         do {
-            candidat = RHModel.loadCandidat(selectedCandidatIndex--);
+            candidat = RHModel.loadCandidat(--selectedCandidatIndex);
         } while (candidat == null);
         
-        refresh();
+        refreshCandidat();
     }
     
     private void handleBtnCandidatNextClicked() {
         
         do {
-            candidat = RHModel.loadCandidat(selectedCandidatIndex++);
+            candidat = RHModel.loadCandidat(++selectedCandidatIndex);
         } while (candidat == null);
         
-        refresh();
+        refreshCandidat();
     }
 }
