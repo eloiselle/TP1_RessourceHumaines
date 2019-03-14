@@ -80,6 +80,8 @@ public class RHModel extends PersistenceManager {
     public static EtatOffreEmploi loadEtatOffreEmploi(int id) { return emFactory.createEntityManager().find(EtatOffreEmploi.class, id); }
     public static Recruteur loadRecruteur(int id)             { return emFactory.createEntityManager().find(Recruteur.class, id); }
     public static TypeEmploi loadTypeEmploi(int id)           { return emFactory.createEntityManager().find(TypeEmploi.class, id); }
+    public static OffreEmploi loadOffreEmploi(int id)         { return emFactory.createEntityManager().find(OffreEmploi.class, id); }
+    public static Application loadApplication(int id)         { return emFactory.createEntityManager().find(Application.class, id); }
     //
     //    public static CompetenceRequired loadCours(int id_curriculum, int id_professeur) {
     //        return emFactory.createEntityManager().find(CompetenceRequired.class, new CompetenceRequiredId(id_curriculum,id_professeur));
