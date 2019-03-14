@@ -22,6 +22,9 @@ public class CompetenceComparator {
 	/** The selected index. */
 	private int selectedEntrepriseIndex = 0;
 	private int selectedCandidatIndex = 0;
+	
+	private JLabel lblEntIndex = new JLabel();
+	private JLabel lblCanIndex = new JLabel();
 
 	/** The frame. */
 	private JFrame f;
@@ -31,10 +34,15 @@ public class CompetenceComparator {
 	private JPanel panelDataCandidat;
 	private JPanel panelCompetenceEntreprise;
 	private JPanel panelCompetenceCandidat;
-	private JMenuBar navBar;
 
+	/** The menu bar elements. */
+	private JButton btnEntreprisePrev;
+	private JButton btnEntrepriseNext;
+	private JButton btnCandidatPrev;
+	private JButton btnCandidatNext;
+	
 	/** Custom colors. */
-	private Color cBlack = new Color(40, 40, 40);
+	private Color backgroundColor = new Color(40, 40, 40);
 
 	/** Entreprise elements. */
 	private JLabel lblEntrepriseHeader[] = { 
@@ -100,16 +108,31 @@ public class CompetenceComparator {
 	}
 
 	/**
-	 * Init the main frame and panel configurations.
+	 * Init the CompetenceComparator window.
 	 */
 	public void init() {
 
+		initFramesAndPanels();
+		initButtons();
+		
+		//First refresh, add values in labels (without f.setVisible(true))
+		refreshEntreprise();
+		refreshCandidat();
+		
+		initEntreprisePanels();
+		initCandidatPanels();
+	}
+
+	/**
+	 * Init the JFrame and JPanels.
+	 */
+	public void initFramesAndPanels() {
 		f = new JFrame("Gestion des offres d'emplois");
 		f.setLayout(new MigLayout("", 
-				"[350!][350!]", 
-				"[100!][200!][200!]"));
+				"[175!][175!][175!][175!]", 
+				"[30!][200!][200!]"));
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.getContentPane().setBackground(cBlack);
+		f.getContentPane().setBackground(backgroundColor);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		panelDataEntreprise = new JPanel(new MigLayout("", 
@@ -120,30 +143,123 @@ public class CompetenceComparator {
 				"[125!][125!]", ""));
 		panelCompetenceCandidat = new JPanel(new MigLayout("", 
 				"[125!][125!]", ""));
-
-		navBar = new JMenuBar();
-		navBar.setBackground(Color.WHITE);
 		
 		panelDataEntreprise.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		panelDataCandidat.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 
-		panelDataEntreprise.setBackground(cBlack);
-		panelDataCandidat.setBackground(cBlack);
-		panelCompetenceEntreprise.setBackground(cBlack);
-		panelCompetenceCandidat.setBackground(cBlack);
+		panelDataEntreprise.setBackground(backgroundColor);
+		panelDataCandidat.setBackground(backgroundColor);
+		panelCompetenceEntreprise.setBackground(backgroundColor);
+		panelCompetenceCandidat.setBackground(backgroundColor);
 		
-	}
+		JScrollPane scrollPaneEntreprise = new JScrollPane(panelCompetenceEntreprise);
+		JScrollPane scrollPaneCandidat = new JScrollPane(panelCompetenceCandidat);
 
+		scrollPaneEntreprise.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPaneCandidat.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		f.add(panelDataEntreprise, "cell 0 1 1 1, top, center");
+		f.add(panelDataCandidat, "cell 2 1 3 1, top, center");
+		f.add(scrollPaneEntreprise, "cell 0 2 2 2, top, center");
+		f.add(scrollPaneCandidat, "cell 2 2 4 2, top, center");
+	}
+	
+	/**
+	 * Init the entreprise panels.
+	 */
+	public void initEntreprisePanels() {
+		// Affichage headers
+		for (int i = 0; i < lblEntrepriseHeader.length; i++) {
+			lblEntrepriseHeader[i].setForeground(Color.WHITE);
+			panelDataEntreprise.add(lblEntrepriseHeader[i], "cell 0 " + i);
+		}
+		
+		// Affichage labels
+		for (int i = 0; i < lblEntrepriseData.size(); i++) {
+			lblEntrepriseData.get(i).setForeground(Color.WHITE);
+			panelDataEntreprise.add(lblEntrepriseData.get(i), "cell 1 " + i);
+		}
+
+		// Affichage competence
+		for (int i = 0; i < lblEntrepriseCompetence.size(); i++) {
+			lblEntrepriseCompetence.get(i).setForeground(Color.WHITE);
+			panelCompetenceEntreprise.add(lblEntrepriseCompetence.get(i), "cell 0 " + i);
+		}
+
+		// Affichage niveau
+		for (int i = 0; i < lblEntrepriseLevel.size(); i++) {
+			lblEntrepriseLevel.get(i).setForeground(Color.WHITE);
+			panelCompetenceEntreprise.add(lblEntrepriseLevel.get(i), "cell 1 " + i + ", right");
+		}
+		
+		lblEntIndex.setForeground(Color.WHITE);
+	}
+	
+	/**
+	 * Init the candidat panels.
+	 */
+	public void initCandidatPanels() {
+		// Affichage headers
+		for (int i = 0; i < lblCandidatHeader.length; i++) {
+			lblCandidatHeader[i].setForeground(Color.WHITE);
+			panelDataCandidat.add(lblCandidatHeader[i], "cell 0 " + i);
+		}
+		
+		// Affichage labels
+		for (int i = 0; i < lblCandidatData.size(); i++) {
+			lblCandidatData.get(i).setForeground(Color.WHITE);
+			panelDataCandidat.add(lblCandidatData.get(i), "cell 1 " + i);
+		}
+
+		// Affichage competence
+		for (int i = 0; i < lblCandidatCompetence.size(); i++) {
+			lblCandidatCompetence.get(i).setForeground(Color.WHITE);
+			panelCompetenceCandidat.add(lblCandidatCompetence.get(i), "cell 0 " + i);
+		}
+
+		// Affichage niveau
+		for (int i = 0; i < lblCandidatLevel.size(); i++) {
+			lblCandidatLevel.get(i).setForeground(Color.WHITE);
+			panelCompetenceCandidat.add(lblCandidatLevel.get(i), "cell 1 " + i + ", right");
+		}
+		
+		lblCanIndex.setForeground(Color.WHITE);
+	}
+	
+	/**
+	 * Init the buttons.
+	 */
+	public void initButtons() {
+		btnEntreprisePrev = new JButton("Prev");
+		btnEntreprisePrev.addActionListener(e -> handleBtnEntreprisePrevClicked());
+		f.add(btnEntreprisePrev, "cell 0 0, bottom, center, split 2");
+		
+		btnEntrepriseNext = new JButton("Next");
+		btnEntrepriseNext.addActionListener(e -> handleBtnEntrepriseNextClicked());
+		f.add(btnEntrepriseNext, "bottom, center");
+		
+		f.add(lblEntIndex, "bottom, center");
+		
+		btnCandidatPrev = new JButton("Prev");
+		btnCandidatPrev.addActionListener(e -> handleBtnCandidatPrevClicked());
+		f.add(btnCandidatPrev, "bottom, center, split 2");
+		
+		btnCandidatNext = new JButton("Next");
+		btnCandidatNext.addActionListener(e -> handleBtnCandidatNextClicked());
+		f.add(btnCandidatNext, "bottom, center");
+		
+		f.add(lblCanIndex, "bottom, center");
+	}
+	
 	/**
 	 * Refresh the whole window and data.
 	 */
 	public void refresh() {
-
-		// Variables temporaires
 		refreshEntreprise();
 		refreshCandidat();
 		
-		refreshFrame();
+		f.pack();
+		f.setVisible(true);
 	}
 	
 	/**
@@ -171,30 +287,8 @@ public class CompetenceComparator {
 			lblEntrepriseLevel.add(new JLabel(String.valueOf(c.getLevel())));
 		}
 		;
-
-		// Affichage headers
-		for (int i = 0; i < lblEntrepriseHeader.length; i++) {
-			lblEntrepriseHeader[i].setForeground(Color.WHITE);
-			panelDataEntreprise.add(lblEntrepriseHeader[i], "cell 0 " + i);
-		}
 		
-		// Affichage labels
-		for (int i = 0; i < lblEntrepriseData.size(); i++) {
-			lblEntrepriseData.get(i).setForeground(Color.WHITE);
-			panelDataEntreprise.add(lblEntrepriseData.get(i), "cell 1 " + i);
-		}
-
-		// Affichage competence
-		for (int i = 0; i < lblEntrepriseCompetence.size(); i++) {
-			lblEntrepriseCompetence.get(i).setForeground(Color.WHITE);
-			panelCompetenceEntreprise.add(lblEntrepriseCompetence.get(i), "cell 0 " + i);
-		}
-
-		// Affichage niveau
-		for (int i = 0; i < lblEntrepriseLevel.size(); i++) {
-			lblEntrepriseLevel.get(i).setForeground(Color.WHITE);
-			panelCompetenceEntreprise.add(lblEntrepriseLevel.get(i), "cell 1 " + i + ", right");
-		}
+		lblEntIndex.setText("Index: " + String.valueOf(selectedEntrepriseIndex));
 	}
 	
 	/**
@@ -219,53 +313,10 @@ public class CompetenceComparator {
 			lblCandidatLevel.add(new JLabel(String.valueOf(c.getLevel())));
 		}
 		;
-
-		// Affichage headers
-		for (int i = 0; i < lblCandidatHeader.length; i++) {
-			lblCandidatHeader[i].setForeground(Color.WHITE);
-			panelDataCandidat.add(lblCandidatHeader[i], "cell 0 " + i);
-		}
 		
-		// Affichage labels
-		for (int i = 0; i < lblCandidatData.size(); i++) {
-			lblCandidatData.get(i).setForeground(Color.WHITE);
-			panelDataCandidat.add(lblCandidatData.get(i), "cell 1 " + i);
-		}
-
-		// Affichage competence
-		for (int i = 0; i < lblCandidatCompetence.size(); i++) {
-			lblCandidatCompetence.get(i).setForeground(Color.WHITE);
-			panelCompetenceCandidat.add(lblCandidatCompetence.get(i), "cell 0 " + i);
-		}
-
-		// Affichage niveau
-		for (int i = 0; i < lblCandidatLevel.size(); i++) {
-			lblCandidatLevel.get(i).setForeground(Color.WHITE);
-			panelCompetenceCandidat.add(lblCandidatLevel.get(i), "cell 1 " + i + ", right");
-		}
+		lblCanIndex.setText("Index: " + String.valueOf(selectedCandidatIndex));
 	}
-	
-	/**
-	 * Refresh the main frame.
-	 */
-	public void refreshFrame() {
-		
-		JScrollPane sp1 = new JScrollPane(panelCompetenceEntreprise);
-		JScrollPane sp2 = new JScrollPane(panelCompetenceCandidat);
 
-		sp1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		sp2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		
-		f.add(navBar, "cell 0 0 1 0, top, center");
-		f.add(panelDataEntreprise, "cell 0 1, top, center");
-		f.add(panelDataCandidat, "cell 1 1, top, center");
-		f.add(sp1, "cell 0 2, top, center");
-		f.add(sp2, "cell 1 2, top, center");
-		
-		f.pack();
-		f.setVisible(true);
-	}
-	
 	/**
 	 * Generate data.
 	 */
@@ -381,5 +432,25 @@ public class CompetenceComparator {
 		application.setAdresseEntrevue("400 rue Marquette");
 		application.setCommentaire("...");
 		application.setOffreEmploi(offreEmploi);
+	}
+
+	private void handleBtnEntreprisePrevClicked() {
+    	selectedEntrepriseIndex--;
+    	refresh();
+	}
+	
+	private void handleBtnEntrepriseNextClicked() {
+			selectedEntrepriseIndex++;
+			refresh();
+	}
+	
+	private void handleBtnCandidatPrevClicked() {
+			selectedCandidatIndex--;
+			refresh();
+	}
+	
+	private void handleBtnCandidatNextClicked() {
+			selectedCandidatIndex++;
+			refresh();
 	}
 }
