@@ -103,7 +103,7 @@ public class CompetenceComparator {
         refreshOffreEmploi();
         refreshCandidat();
         
-        panelDataCandidat
+        
 
         initOffreEmploiPanels();
         initCandidatPanels();
@@ -149,22 +149,7 @@ public class CompetenceComparator {
      Init the entreprise panels.
      */
     public void initOffreEmploiPanels() {
-    	
-    	// Init entreprise labels list
-        lblOffreEmploiData.add(new JLabel(offreEmploi.getEmploi().getTitre()));
-        lblOffreEmploiData.add(new JLabel(offreEmploi.getRecruteurInterne().getEntreprise().getName()));
-        lblOffreEmploiData.add(new JLabel(offreEmploi.getRecruteurInterne().getNom() + ", " + offreEmploi.getRecruteurInterne().getPrenom()));
-        lblOffreEmploiData.add(new JLabel(String.valueOf(offreEmploi.getRecruteurInterne().getTelephone()).replaceFirst("(\\d{1})(\\d{3})(\\d{3})(\\d+)", "$1+($2) $3-$4")));
-        lblOffreEmploiData.add(new JLabel(offreEmploi.getRecruteurInterne().getEmail()));
-        lblOffreEmploiData.add(new JLabel(offreEmploi.getDateFin()));
-        lblOffreEmploiData.add(new JLabel(String.valueOf(offreEmploi.getNbrPostes())));
         
-        // Init entreprise competences + niveaux
-        for (CompetenceRequired c : offreEmploi.getEmploi().getCompetenceRequireds()) {
-            lblOffreEmploiCompetence.add(new JLabel(c.getCompetence().getName()));
-            lblOffreEmploiLevel.add(new JLabel(String.valueOf(c.getLevel())));
-        }
-    	
         // Affichage headers
         for (int i = 0; i < lblOffreEmploiHeader.length; i++) {
             lblOffreEmploiHeader[i].setForeground(Color.WHITE);
@@ -283,18 +268,25 @@ public class CompetenceComparator {
      */
     public void refreshOffreEmploi() {
         
-    	// Refresh entreprise labels
-        lblOffreEmploiData.get(0).setText(offreEmploi.getEmploi().getTitre());
-        lblOffreEmploiData.get(1).setText(offreEmploi.getRecruteurInterne().getEntreprise().getName());
-        lblOffreEmploiData.get(2).setText(offreEmploi.getRecruteurInterne().getNom() + ", " + offreEmploi.getRecruteurInterne().getPrenom());
-        lblOffreEmploiData.get(3).setText(String.valueOf(offreEmploi.getRecruteurInterne().getTelephone()).replaceFirst("(\\d{1})(\\d{3})(\\d{3})(\\d+)", "$1+($2) $3-$4"));
-        lblOffreEmploiData.get(4).setText(offreEmploi.getRecruteurInterne().getEmail());
-        lblOffreEmploiData.get(5).setText(offreEmploi.getDateFin());
-        lblOffreEmploiData.get(6).setText(String.valueOf(offreEmploi.getNbrPostes()));
+        lblOffreEmploiData.clear();
+        lblOffreEmploiCompetence.clear();
+        lblOffreEmploiLevel.clear();
         
-        for (int i = 0; i < offreEmploi.getEmploi().getCompetenceRequireds().size(); i++) {
-			
-		}
+    	// Refresh entreprise labels
+           	// Init entreprise labels list
+        lblOffreEmploiData.add(new JLabel(offreEmploi.getEmploi().getTitre()));
+        lblOffreEmploiData.add(new JLabel(offreEmploi.getRecruteurInterne().getEntreprise().getName()));
+        lblOffreEmploiData.add(new JLabel(offreEmploi.getRecruteurInterne().getNom() + ", " + offreEmploi.getRecruteurInterne().getPrenom()));
+        lblOffreEmploiData.add(new JLabel(String.valueOf(offreEmploi.getRecruteurInterne().getTelephone()).replaceFirst("(\\d{1})(\\d{3})(\\d{3})(\\d+)", "$1+($2) $3-$4")));
+        lblOffreEmploiData.add(new JLabel(offreEmploi.getRecruteurInterne().getEmail()));
+        lblOffreEmploiData.add(new JLabel(offreEmploi.getDateFin()));
+        lblOffreEmploiData.add(new JLabel(String.valueOf(offreEmploi.getNbrPostes())));
+        
+        // Init entreprise competences + niveaux
+        for (CompetenceRequired c : offreEmploi.getEmploi().getCompetenceRequireds()) {
+            lblOffreEmploiCompetence.add(new JLabel(c.getCompetence().getName()));
+            lblOffreEmploiLevel.add(new JLabel(String.valueOf(c.getLevel())));
+        }
         
         // Refresh entreprise competences + niveaux
         
@@ -312,6 +304,7 @@ public class CompetenceComparator {
         
         lblCandidatData.clear();
         lblCandidatCompetence.clear();
+        lblCandidatLevel.clear();
         
         // Refresh candidat labels
         lblCandidatData.add(new JLabel(candidat.getNom() + ", " + candidat.getPrenom()));
@@ -338,7 +331,7 @@ public class CompetenceComparator {
             offreEmploi= RHModel.loadOffreEmploi(--selectedOffreEmploiIndex);
         } while (offreEmploi== null);
         
-        refreshOffreEmploi();
+         refreshView();
     }
     
     private void handleBtnOffreEmploiNextClicked() {
@@ -347,7 +340,7 @@ public class CompetenceComparator {
             offreEmploi= RHModel.loadOffreEmploi(++selectedOffreEmploiIndex);
         } while (offreEmploi == null);
         
-        refreshOffreEmploi();
+        refreshView();
     }
     
     private void handleBtnCandidatPrevClicked() {
@@ -356,7 +349,7 @@ public class CompetenceComparator {
             candidat = RHModel.loadCandidat(--selectedCandidatIndex);
         } while (candidat == null);
         
-        refreshCandidat();
+        refreshView();
     }
     
     private void handleBtnCandidatNextClicked() {
@@ -365,6 +358,19 @@ public class CompetenceComparator {
             candidat = RHModel.loadCandidat(++selectedCandidatIndex);
         } while (candidat == null);
         
+        refreshView();
+        
+    }
+    
+    private void refreshView(){
+        f.removeAll();
+        f.setVisible(false);
+        initFramesAndPanels();
+        initButtons();
         refreshCandidat();
+        refreshOffreEmploi();
+        initCandidatPanels();
+        initOffreEmploiPanels();
+        refreshFrame();
     }
 }
