@@ -45,7 +45,7 @@ public class Recruteur implements IdInterface {
     @ManyToOne
     @JoinColumn(name = "id_entreprise", insertable = false)
     private Entreprise entreprise;
-    public Entreprise getcertification()             { return entreprise; }
+    public Entreprise getEntreprise()             	 { return entreprise; }
     public void setEntreprise(Entreprise entreprise) { this.entreprise = entreprise; }
     
     // ************************************************************************
