@@ -6,6 +6,8 @@ import java.math.BigInteger;
 
 public class DBCreator {
     
+    private static boolean isGenerated = false;
+    
     public static void main(String[] args) throws Exception{ run(); }
     
     
@@ -18,6 +20,9 @@ public class DBCreator {
     
     /** Generate data for the database */
     public static void generateData(){
+        
+        if (isGenerated) return; // Evite de generer plusieurs fois les meme donnees
+        
         
         // TYPE
         
@@ -153,6 +158,7 @@ public class DBCreator {
         application.setOffreEmploi(offreEmploi);
         RHModel.create(application);
     
+        isGenerated = true;
         System.out.println("Database generation complete.");
 
 //        System.out.println("Start traveling test");
@@ -167,6 +173,6 @@ public class DBCreator {
 //        }
     
 
-        System.out.println("Done.");
+    
     }
 }

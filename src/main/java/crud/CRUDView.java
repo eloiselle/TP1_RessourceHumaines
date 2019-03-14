@@ -6,15 +6,17 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 
+/**
+ CRUDView est une view generique reutilisable pour plusieurs type de donnees */
 public abstract class CRUDView {
     
+    private              JFrame         f;
     private              CRUDController ctrl       = null;
     private static final int            MIN_WIDTH  = 400;
     private static final int            MIN_HEIGHT = 100;
-    private              JFrame         f;
     
     JLabel lID = new JLabel();
-    JPanel dataPanel;
+    private JPanel dataPanel;
     private JPanel buttonPanel;
     private JPanel statusPanel;
     private JLabel statusLabel;
@@ -25,9 +27,52 @@ public abstract class CRUDView {
     private JButton bNew;
     private JButton bLoad;
     
-    
     // ************************************************************************
     
+    // Abstract
+    public abstract String getWindowTitle();
+    public abstract void initElements();
+    public abstract void refreshInputField();
+    
+    // Handlers
+    private void handleFieldChanged() {
+        
+        ctrl.modify();
+        changeStatusBar("Modified");
+    }
+    private void handleLoadButtonClicked() {
+        
+        ctrl.load();
+        
+        if (ctrl.objectExistInDB()) {
+            changeStatusBar("Loaded");
+        } else {
+            changeStatusBar("ID not found");
+        }
+    }
+    private void handleDeleteButtonClicked() {
+        
+        if (ctrl.delete()) changeStatusBar("Deleted");
+        else changeStatusBar("Could not delete because it doesn't exist");
+    }
+    private void handleSaveButtonClicked() {
+        
+        ctrl.save();
+        changeStatusBar("Saved");
+    }
+    private void handleNewButtonClicked() {
+        
+        ctrl.createNew();
+        changeStatusBar("New");
+    }
+    private void handleRefreshButtonClicked() {
+        
+        refresh();
+        changeStatusBar("Refresh");
+    }
+    
+    
+    private void changeStatusBar(String status)     { statusLabel.setText(status);}
     
     void setController(CRUDController ctrl) { this.ctrl = ctrl; }
     
@@ -43,7 +88,7 @@ public abstract class CRUDView {
         f = new JFrame(getWindowTitle());
         initFrameElements();
         initFrameProperties();
-        refresh();
+        //refresh();
     }
     
     private void initFrameProperties() {
@@ -60,39 +105,37 @@ public abstract class CRUDView {
     
     private void initFrameElements() {
         
-        initLabels();
-        initButtons();
-        initFields();
-        
-        initButtonPanel();
         initDataPanel();
+        initButtonPanel();
+        initButtons();
+        initElements();
         initStatusBar();
         
         initLayout();
     }
     
-    public abstract String getWindowTitle();
-    public abstract void initLabels();
-    
-    public abstract void initFields();
     
     private void initButtons() {
         
+        bNew = new JButton("New");
+        bNew.addActionListener(e -> handleNewButtonClicked());
+        buttonPanel.add(bNew);
+        
         bLoad = new JButton("Load");
         bLoad.addActionListener(e -> handleLoadButtonClicked());
-        
-        bRefresh = new JButton("Refresh");
-        bRefresh.addActionListener(e -> handleRefreshButtonClicked());
+        buttonPanel.add(bLoad);
         
         bSave = new JButton("Save");
         bSave.addActionListener(e -> handleSaveButtonClicked());
+        buttonPanel.add(bSave);
         
         bDelete = new JButton("Delete");
         bDelete.addActionListener(e -> handleDeleteButtonClicked());
+        buttonPanel.add(bDelete);
         
-        bNew = new JButton("New");
-        bNew.addActionListener(e -> handleNewButtonClicked());
-        
+        bRefresh = new JButton("Refresh");
+        bRefresh.addActionListener(e -> handleRefreshButtonClicked());
+        buttonPanel.add(bRefresh);
     }
     
     private void initStatusBar() {
@@ -113,14 +156,16 @@ public abstract class CRUDView {
         buttonPanel = new JPanel(new GridBagLayout());
         buttonPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         
-        buttonPanel.add(bNew);
-        buttonPanel.add(bLoad);
-        buttonPanel.add(bSave);
-        buttonPanel.add(bDelete);
-        buttonPanel.add(bRefresh);
     }
     
-    public abstract void initDataPanel();
+    private void initDataPanel() {
+        
+        dataPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS)); // Vertical
+        
+        dataPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        
+    }
     
     private void initLayout() {
         
@@ -131,14 +176,6 @@ public abstract class CRUDView {
     }
     
     // ************************************************************************
-    
-    // Handlers
-    private void handleFieldChanged() { ctrl.modify(); }
-    private void handleRefreshButtonClicked() { refresh(); changeStatusBar("Refresh");}
-    private void handleLoadButtonClicked()    { ctrl.load();}
-    private void handleDeleteButtonClicked()  { ctrl.delete();}
-    private void handleSaveButtonClicked()    { ctrl.save();}
-    private void handleNewButtonClicked()     { ctrl.createNew();}
     
     
     void refresh() {
@@ -156,15 +193,40 @@ public abstract class CRUDView {
         System.out.println(ctrl.getObj());
     }
     
-    public abstract void refreshInputField();
+    // NEW DATA FIELD *********************************************************
     
-    // ************************************************************************
+    JLabel newLabel(String text) {
+        
+        JLabel label = new JLabel(text);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        dataPanel.add(label);
+        return label;
+    }
     
+    JTextField newTextField(String label) {
+        
+        newLabel(label);
+        JTextField textField = new JTextField();
+        textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        textField.getDocument().addDocumentListener(defaultFieldListener());
+        dataPanel.add(textField);
+        return textField;
+    }
     
-    void changeStatusBar(String status) { statusLabel.setText(status);}
+    JTextArea newTextArea(String label) {
+        
+        newLabel(label);
+        JTextArea textArea = new JTextArea();
+        textArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        textArea.setRows(5);
+        textArea.getDocument().addDocumentListener(defaultFieldListener());
+        dataPanel.add(textArea);
+        return textArea;
+    }
+    
     
     /** Macro pour savoir quand un champ est changer */
-    DocumentListener defaultFieldListener() {
+    private DocumentListener defaultFieldListener() {
         
         return new DocumentListener() {
             
